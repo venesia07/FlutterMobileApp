@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/program.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../screens/application_screen.dart';
+import '../screens/leave_review_screen.dart';
 
 class ProgramDetailsScreen extends StatelessWidget {
   final Program program;
@@ -196,7 +197,12 @@ class ProgramDetailsScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: Leave review functionality
+                   Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReviewScreen(),
+                  ),
+                );
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 15),

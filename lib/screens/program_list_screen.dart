@@ -1,11 +1,16 @@
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import '../models/program.dart';
 import '../screens/program_details_screen.dart';
 import '../widgets/bottom_nav_bar.dart';
 
- class ProgramListScreen extends StatelessWidget {
-  ProgramListScreen({super.key});
+class ProgramListScreen extends StatefulWidget {
+  const ProgramListScreen({super.key});
 
+  @override
+  State<ProgramListScreen> createState() => _ProgramListScreenState();
+}
+
+class _ProgramListScreenState extends State<ProgramListScreen> {
   // Sample programs
   final List<Program> programs = [
     Program(
@@ -46,6 +51,30 @@ import '../widgets/bottom_nav_bar.dart';
     ),
   ];
 
+  List<Program> filteredPrograms = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredPrograms = programs;
+  }
+
+  void searchProgram(String query) {
+    setState(() {
+      filteredPrograms = programs.where((program) {
+        return program.title
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            program.description
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            program.location
+                .toLowerCase()
+                .contains(query.toLowerCase());
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +82,13 @@ import '../widgets/bottom_nav_bar.dart';
         title: const Text("All Programs"),
         centerTitle: true,
       ),
+
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
             child: TextField(
+              onChanged: searchProgram,
               decoration: InputDecoration(
                 hintText: "Search programs...",
                 prefixIcon: const Icon(Icons.search),
@@ -69,25 +100,50 @@ import '../widgets/bottom_nav_bar.dart';
           ),
 
           Expanded(
-            child: ListView.builder(
-              itemCount: programs.length,
+            child: filteredPrograms.isEmpty
+      ? Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.search_off,
+                size: 70,
+                color: Colors.grey.shade400,
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "No Programs Found",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Try searching with a different keyword.",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ): ListView.builder(
+              itemCount: filteredPrograms.length,
               itemBuilder: (context, index) {
-                final program = programs[index];
+                final program = filteredPrograms[index];
 
                 return InkWell(
                   borderRadius: BorderRadius.circular(12),
-
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ProgramDetailsScreen(
-                          program: program,
-                        ),
+                        builder: (context) =>
+                            ProgramDetailsScreen(program: program),
                       ),
                     );
                   },
-
                   child: Card(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -105,6 +161,33 @@ import '../widgets/bottom_nav_bar.dart';
                               width: 100,
                               height: 100,
                               fit: BoxFit.cover,
+                              errorBuilder:
+                                  (context, error, stackTrace) {
+                                return Container(
+                                  width: 100,
+                                  height: 100,
+                                  color: Colors.grey.shade300,
+                                  child: const Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.image_not_supported,
+                                        size: 35,
+                                        color: Colors.grey,
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        "No Image",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
                           ),
 
@@ -169,21 +252,19 @@ import '../widgets/bottom_nav_bar.dart';
           ),
         ],
       ),
+
       bottomNavigationBar: BottomNavBar(
-          currentIndex: 1,
-          onTap: (index) {
-                if (index == 0) {
-                    // Home
-                }
-                if (index == 1) {
-                    // Already on Programs
-                }
-                if (index == 2) {
-                  // Profile
-                }
-          },
+        currentIndex: 1,
+        onTap: (index) {
+          if (index == 0) {
+            // Navigate to Home Screen
+          } else if (index == 1) {
+            // Already on Program List Screen
+          } else if (index == 2) {
+            // Navigate to Profile Screen
+          }
+        },
       ),
     );
-    
   }
 }

@@ -19,11 +19,24 @@ Target Users
 - Excelerate Learners
 - Excelerate Administrators
 
+Features Implemented (Week2)
+- Login Screen UI
+- Home Screen UI (for learners)
+- Home Screen UI (for admins)
+- Program Listing Screen UI 
+- Program Details Screen UI 
+- Leave Review Screen UI
+- Application Screen UI
+- Profile Screen UI (for learners)
+- Profile Screen UI (for admins)
+- Manage Programs Sceen UI (for admins)
+
  Planned Features
 - User Authentication (Login)
 - Home Dashboard
 - Program Listings
 - Program Details
+- Program Management 
 - User Profile
 - Navigation Drawer/Bottom Navigation
 - Responsive User Interface
@@ -38,15 +51,30 @@ Technology Stack
 - Figma (Wireframing)
 
 Navigation Flow
+Learners: 
 Login
  ↓
 Home
  ↓
 Program Listing
- ↓
-Program Details
- ↓
+        ↓ (if program is selected)
+        Program Details
+              ↓ (if apply button is clicked)
+              Application Screen 
+              ↓ (if leave review button is clicked)
+              Leave Review Screen
+ ↓ 
 Profile
+
+Admins:
+Login
+ ↓
+Home
+ ↓
+Program Management
+ ↓ 
+Profile
+
 
 Installation
 
@@ -83,12 +111,8 @@ Team Lead:
 Contributors:
 - Aakash Bajpai 
 - Ananya Verma 
-- Blessed Oppong 
-- Carlo Luna
-- David Kendrick 
-- Essencia Letlape 
-- Hazel Agina 
-- Morice Dhaka 
+- Brayson Imbambi
+- Venesia Swartz
 
 
 Project Status
@@ -102,3 +126,14 @@ Current Progress:
 - Wireframes 
 - Team Charter 
 
+
+Week 2 - Transform low-fidelity wireframes into functional Flutter UI 
+
+Current Progress:
+- Developed the application's core screens.
+- Implemented navigation between screens.
+- Created reusable Flutter widgets.
+- Maintained consistent UI design.
+- Updated project documentation.
+
+Screenshots:

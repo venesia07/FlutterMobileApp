@@ -21,61 +21,59 @@ class AdminProfileScreen extends StatelessWidget {
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.black87),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {},
-          ),
+          IconButton(icon: const Icon(Icons.more_horiz), onPressed: () {}),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Admin Profile Card
+            // Profile Header
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.blue[700]!, Colors.blue[500]!],
-                ),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blue.withOpacity(0.3),
-                    blurRadius: 15,
-                    offset: const Offset(0, 6),
+                    color: Colors.grey.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
               child: Row(
                 children: [
+                  // Avatar
                   Container(
-                    width: 60,
-                    height: 60,
+                    width: 70,
+                    height: 70,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.green[100],
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.5),
-                        width: 2,
-                      ),
+                      border: Border.all(color: Colors.white, width: 2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.15),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
                     child: const Center(
                       child: Text(
-                        'AD',
+                        'A',
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.green,
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(width: 16),
+                  // Admin Info
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,36 +81,49 @@ class AdminProfileScreen extends StatelessWidget {
                         const Text(
                           'Admin User',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white,
+                            color: Colors.black87,
                           ),
                         ),
                         const SizedBox(height: 4),
                         const Text(
-                          'admin@excelerate.com',
-                          style: TextStyle(fontSize: 14, color: Colors.white70),
+                          'admin@email.com',
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 4),
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,
                             vertical: 3,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.green[50],
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Administrator',
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
+                              color: Colors.green[700],
                             ),
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                  // Edit Icon
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.edit_outlined,
+                      size: 20,
+                      color: Colors.grey[600],
                     ),
                   ),
                 ],
@@ -120,165 +131,188 @@ class AdminProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Stats Grid
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              children: [
-                _buildStatCard(
-                  title: 'Total Registrations',
-                  value: '342',
-                  change: '+4%',
-                  icon: Icons.people_outline,
-                  iconColor: Colors.blue,
-                ),
-                _buildStatCard(
-                  title: 'Active Programs',
-                  value: '12',
-                  change: '7 urgent',
-                  icon: Icons.play_circle_outline,
-                  iconColor: Colors.green,
-                ),
-                _buildStatCard(
-                  title: 'Pending Feedback',
-                  value: '47',
-                  change: 'Needs review',
-                  icon: Icons.feedback_outlined,
-                  iconColor: Colors.orange,
-                ),
-                _buildStatCard(
-                  title: 'Completion Rate',
-                  value: '87%',
-                  change: '+5%',
-                  icon: Icons.trending_up_outlined,
-                  iconColor: Colors.purple,
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-            // Quick Actions Section
-            const Text(
-              'Quick Actions',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildActionCard(
-                    icon: Icons.announcement_outlined,
-                    title: 'New\nAnnouncement',
-                    color: Colors.blue,
-                    onTap: () {},
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _buildActionCard(
-                    icon: Icons.add_circle_outlined,
-                    title: 'Create\nProgram',
-                    color: Colors.green,
-                    onTap: () {},
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _buildActionCard(
-                    icon: Icons.feedback_outlined,
-                    title: 'View\nFeedback',
-                    color: Colors.orange,
-                    badge: '47',
-                    onTap: () {},
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-            // Recent Registrations
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Recent Registrations',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black87,
-                  ),
-                ),
-                TextButton(onPressed: () {}, child: const Text('View All')),
-              ],
-            ),
-            const SizedBox(height: 12),
-
+            // Dashboard Stats
             Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.08),
+                    color: Colors.grey.withOpacity(0.05),
                     blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildRegistrationItem(
-                    learnerName: 'Sarah K.',
-                    program: 'Leadership Fundamentals',
-                    date: 'Aug 18, 2026',
-                    avatarColor: Colors.pink,
+                  const Text(
+                    'Dashboard Stats',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
                   ),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  _buildRegistrationItem(
-                    learnerName: 'John M.',
-                    program: 'Data Analytics Bootcamp',
-                    date: 'Aug 17, 2026',
-                    avatarColor: Colors.blue,
-                  ),
-                  const Divider(height: 1, indent: 16, endIndent: 16),
-                  _buildRegistrationItem(
-                    learnerName: 'Priya T.',
-                    program: 'Communication & Presentation',
-                    date: 'Aug 12, 2026',
-                    avatarColor: Colors.green,
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildStatItem('342', 'Registrations', Colors.blue),
+                      _buildStatItem('12', 'Programs', Colors.green),
+                      _buildStatItem('47', 'Feedback', Colors.orange),
+                      _buildStatItem('87%', 'Completion', Colors.purple),
+                    ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 20),
 
-            // Sign Out Button
+            // Quick Actions
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Text(
+                      'Quick Actions',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  _buildActionItem(
+                    icon: Icons.announcement_outlined,
+                    title: 'New Announcement',
+                    subtitle: 'Broadcast to all learners',
+                    onTap: () {},
+                  ),
+                  _buildActionItem(
+                    icon: Icons.add_circle_outlined,
+                    title: 'Create Program',
+                    subtitle: 'Add a new learning program',
+                    onTap: () {},
+                  ),
+                  _buildActionItem(
+                    icon: Icons.feedback_outlined,
+                    title: 'View Feedback',
+                    subtitle: '47 pending responses',
+                    onTap: () {},
+                    badge: '47',
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Recent Registrations
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Recent Registrations',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'View All',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  _buildRegistrationItem(
+                    name: 'Sarah K.',
+                    program: 'Leadership Fundamentals',
+                    date: 'Aug 18, 2026',
+                    color: Colors.pink,
+                  ),
+                  const Divider(height: 1),
+                  _buildRegistrationItem(
+                    name: 'John M.',
+                    program: 'Data Analytics Bootcamp',
+                    date: 'Aug 17, 2026',
+                    color: Colors.blue,
+                  ),
+                  const Divider(height: 1),
+                  _buildRegistrationItem(
+                    name: 'Priya T.',
+                    program: 'Communication & Presentation',
+                    date: 'Aug 12, 2026',
+                    color: Colors.green,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Logout Button
             SizedBox(
               width: double.infinity,
-              child: OutlinedButton(
+              child: ElevatedButton(
                 onPressed: () {
-                  _showSignOutDialog(context);
+                  _showLogoutDialog(context);
                 },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.red, width: 1.5),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
+                  elevation: 0,
                 ),
                 child: const Text(
-                  'Sign Out',
+                  'Logout',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.red,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -301,15 +335,15 @@ class AdminProfileScreen extends StatelessWidget {
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          selectedItemColor: Colors.blue[700],
+          selectedItemColor: Colors.green[700],
           unselectedItemColor: Colors.grey,
           selectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.w600,
-            fontSize: 12,
+            fontSize: 11,
           ),
           unselectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.w400,
-            fontSize: 12,
+            fontSize: 11,
           ),
           items: const [
             BottomNavigationBarItem(
@@ -342,133 +376,92 @@ class AdminProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard({
-    required String title,
-    required String value,
-    required String change,
-    required IconData icon,
-    required Color iconColor,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.06),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+  Widget _buildStatItem(String value, String label, Color color) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: color,
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(icon, color: iconColor, size: 24),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  change,
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                    color: iconColor,
-                  ),
-                ),
-              ),
-            ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+            fontWeight: FontWeight.w500,
           ),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildActionCard({
+  Widget _buildActionItem({
     required IconData icon,
     required String title,
-    required Color color,
-    String? badge,
+    required String subtitle,
     required VoidCallback onTap,
+    String? badge,
   }) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.06),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Stack(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: color, size: 28),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, size: 22, color: Colors.grey[700]),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+                  ),
+                ],
+              ),
             ),
             if (badge != null)
-              Positioned(
-                top: 2,
-                right: 2,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    badge,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  badge,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
+            Icon(Icons.chevron_right, color: Colors.grey[400], size: 22),
           ],
         ),
       ),
@@ -476,29 +469,29 @@ class AdminProfileScreen extends StatelessWidget {
   }
 
   Widget _buildRegistrationItem({
-    required String learnerName,
+    required String name,
     required String program,
     required String date,
-    required Color avatarColor,
+    required Color color,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
         children: [
           Container(
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: avatarColor.withOpacity(0.15),
+              color: color.withOpacity(0.15),
               shape: BoxShape.circle,
             ),
             child: Center(
               child: Text(
-                learnerName[0],
+                name[0],
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: avatarColor,
+                  color: color,
                 ),
               ),
             ),
@@ -509,7 +502,7 @@ class AdminProfileScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  learnerName,
+                  name,
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -529,30 +522,31 @@ class AdminProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.chevron_right, color: Colors.grey[400]),
+          Icon(Icons.chevron_right, color: Colors.grey[400], size: 22),
         ],
       ),
     );
   }
 
-  void _showSignOutDialog(BuildContext context) {
+  void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Sign Out'),
-        content: const Text('Are you sure you want to sign out?'),
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text('Cancel', style: TextStyle(color: Colors.grey[600])),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // Add sign out logic here
+              // Add logout logic here
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Sign Out'),
+            child: const Text('Logout'),
           ),
         ],
       ),

@@ -143,14 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
-           boxShadow: [
-  BoxShadow(
-    // ignore: deprecated_member_use
-    color: Colors.black.withOpacity(0.08),
-    blurRadius: 6,
-    offset: const Offset(0, 2),
-  ),
-],
+            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 6, offset: const Offset(0, 2))],
           ),
           child: Column(
             children: [
@@ -223,8 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: programs.length,
-        // ignore: unnecessary_underscores
-        separatorBuilder: (_, __) => const SizedBox(width: 12),
+        separatorBuilder: (_, _) => const SizedBox(width: 12),
         itemBuilder: (BuildContext context, int i) {
           final p = programs[i];
           return InkWell(
@@ -235,8 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14),
-                // ignore: deprecated_member_use
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 8, offset: const Offset(0, 3))],
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 3))],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -293,8 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(14),
-              // ignore: deprecated_member_use
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 6, offset: const Offset(0, 2))],
+              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 6, offset: const Offset(0, 2))],
             ),
             child: Row(
               children: [
@@ -320,13 +310,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _quickActions() {
-   final icons = [
-  Icons.menu_book,
-  Icons.person,
-  Icons.bookmark_border,
-  Icons.notifications_none,
-  Icons.info_outline,
-];
+    final icons = [Icons.menu_book, Icons.person, Icons.bookmark_border, Icons.notifications_none];
+    final labels = ["Programs", "Profile", "Saved", "Alerts"];
+    final taps = [_openList, () => _comingSoon("Profile"), () => _comingSoon("Saved Programs"), () => _comingSoon("Notifications")];
     return GridView.builder(
       itemCount: icons.length,
       shrinkWrap: true,

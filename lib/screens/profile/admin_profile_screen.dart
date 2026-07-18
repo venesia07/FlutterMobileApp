@@ -356,18 +356,15 @@ class AdminProfileScreen extends StatelessWidget {
               activeIcon: Icon(Icons.grid_view),
               label: 'Programs',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.feedback_outlined),
-              activeIcon: Icon(Icons.feedback),
-              label: 'Feedback',
-            ),
+            // Feedback tab REMOVED
             BottomNavigationBarItem(
               icon: Icon(Icons.settings_outlined),
               activeIcon: Icon(Icons.settings),
               label: 'Settings',
             ),
           ],
-          currentIndex: 0,
+          currentIndex:
+              0, // Changed from 0 to 0 (still correct since we removed one tab)
           onTap: (index) {
             // Handle navigation
           },

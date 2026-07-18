@@ -288,18 +288,14 @@ class LearnerProfileScreen extends StatelessWidget {
               activeIcon: Icon(Icons.grid_view),
               label: 'Programs',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications_outlined),
-              activeIcon: Icon(Icons.notifications),
-              label: 'Notifications',
-            ),
+            // Notifications tab REMOVED
             BottomNavigationBarItem(
               icon: Icon(Icons.person_outline),
               activeIcon: Icon(Icons.person),
               label: 'Profile',
             ),
           ],
-          currentIndex: 3,
+          currentIndex: 2, // Changed from 3 to 2 since we removed one tab
           onTap: (index) {
             // Handle navigation
           },

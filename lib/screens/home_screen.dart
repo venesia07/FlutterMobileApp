@@ -320,10 +320,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _quickActions() {
-    final icons = [Icons.menu_book, Icons.person, Icons.bookmark_border, Icons.notifications_none];
-    final labels = ["Programs", "Profile", "Saved", "Alerts"];
-    final taps = [_openList, () => _comingSoon("Profile"), () => _comingSoon("Saved Programs"), () => _comingSoon("Notifications")];
-
+   final icons = [
+  Icons.menu_book,
+  Icons.person,
+  Icons.bookmark_border,
+  Icons.notifications_none,
+  Icons.info_outline,
+];
     return GridView.builder(
       itemCount: icons.length,
       shrinkWrap: true,

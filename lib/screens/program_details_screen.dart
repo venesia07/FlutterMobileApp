@@ -171,48 +171,67 @@ class ProgramDetailsScreen extends StatelessWidget {
             const SizedBox(height: 35),
 
             SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ApplicationScreen(),
-                    ),
-                  );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    "Apply Now",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-            ),
+  width: double.infinity,
+  child: ElevatedButton(
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ApplicationScreen(),
+        ),
+      );
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.red,
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      elevation: 0,
+    ),
+    child: const Text(
+      'Apply Now',
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+      ),
+    ),
+  ),
+),
+            const SizedBox(height: 15),
 
             const SizedBox(height: 15),
 
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                   Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ReviewScreen(),
-                  ),
-                );
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    "Leave Review",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-            ),
+SizedBox(
+  width: double.infinity,
+  child: ElevatedButton(
+    onPressed: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ReviewScreen(),
+        ),
+      );
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.red,
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      elevation: 0,
+    ),
+    child: const Text(
+      'Leave Review',
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+      ),
+    ),
+  ),
+),
           ],
         ),
       ),
@@ -220,16 +239,20 @@ class ProgramDetailsScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavBar(
         currentIndex: 1,
         onTap: (index) {
-          if (index == 0) {
-            // Home
-          }
-          if (index == 1) {
+        switch (index) {
+          case 0:
+            Navigator.pushNamed(context, '/home');
+            break;
+
+          case 1:
             Navigator.pop(context);
-          }
-          if (index == 2) {
-            // Profile
-          }
-        },
+            break;
+
+          case 2:
+            Navigator.pushNamed(context, '/learnerProfile');
+            break;
+        }
+      },
       ),
 
     );

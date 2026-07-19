@@ -7,6 +7,8 @@ import 'screens/application_screen.dart';
 import 'screens/leave_review_screen.dart';
 import 'screens/profile/admin_profile_screen.dart';
 import 'screens/profile/learner_profile_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 import 'screens/splash_screen.dart';
 
 //import 'theme/app_theme.dart';
@@ -26,11 +28,13 @@ class ExcelerateApp extends StatelessWidget {
       //theme: AppTheme.lightTheme,
 
       // Temporary start screen until LoginScreen is added
-      initialRoute: '/',
+      initialRoute: '/splash',
 
       routes: {
         '/': (context) => const SplashScreen(),
-        //'/login': (context) => const LoginScreen(),
+         '/splash': (context) => const SplashScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
         '/home': (context) => const HomeScreen(),
         '/programs': (context) => const ProgramListScreen(),
         '/application': (context) => const ApplicationScreen(),

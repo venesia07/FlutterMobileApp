@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (isLearner) {
       Navigator.pushReplacementNamed(context, "/home");
     } else {
-      Navigator.pushReplacementNamed(context, "/adminHome");
+      Navigator.pushReplacementNamed(context, "/admin-dashboard");
     }
   }
 

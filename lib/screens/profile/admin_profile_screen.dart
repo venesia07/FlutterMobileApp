@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/bottom_nav_bar.dart';
 
 class AdminProfileScreen extends StatelessWidget {
   const AdminProfileScreen({super.key});
@@ -321,56 +322,30 @@ class AdminProfileScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.green[700],
-          unselectedItemColor: Colors.grey,
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 11,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 11,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard_outlined),
-              activeIcon: Icon(Icons.dashboard),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_outlined),
-              activeIcon: Icon(Icons.grid_view),
-              label: 'Programs',
-            ),
-            // Feedback tab REMOVED
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              activeIcon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
-          currentIndex:
-              0, // Changed from 0 to 0 (still correct since we removed one tab)
-          onTap: (index) {
-            // Handle navigation
-          },
-        ),
-      ),
-    );
+bottomNavigationBar: BottomNavBar(
+    currentIndex: 2,
+    onTap: (index) {
+      switch (index) {
+        case 0:
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/home',
+            (route) => false,
+          );
+          break;
+
+        case 1:
+          Navigator.pushNamed(context, '/programs');
+          break;
+
+        case 2:
+          // Already on Profile
+          break;
+      }
+    },
+  ),
+);
+    
   }
 
   Widget _buildStatItem(String value, String label, Color color) {

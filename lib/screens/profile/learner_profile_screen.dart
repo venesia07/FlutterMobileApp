@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../../widgets/bottom_nav_bar.dart';
 class LearnerProfileScreen extends StatelessWidget {
   const LearnerProfileScreen({super.key});
 
@@ -253,55 +253,30 @@ class LearnerProfileScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.blue[700],
-          unselectedItemColor: Colors.grey,
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 11,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 11,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_outlined),
-              activeIcon: Icon(Icons.grid_view),
-              label: 'Programs',
-            ),
-            // Notifications tab REMOVED
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: 2, // Changed from 3 to 2 since we removed one tab
-          onTap: (index) {
-            // Handle navigation
-          },
-        ),
+    bottomNavigationBar: BottomNavBar(
+      currentIndex: 2,
+      onTap: (index) {
+        switch (index) {
+          case 0:
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            );
+            break;
+
+          case 1:
+            Navigator.pushNamed(context, '/programs');
+            break;
+
+          case 2:
+            // Already on Learner Profile
+            break;
+        }
+      },
       ),
     );
+    
   }
 
   Widget _buildInfoRow(String label, String value) {
@@ -384,5 +359,7 @@ class LearnerProfileScreen extends StatelessWidget {
         ],
       ),
     );
+    
   }
+  
 }

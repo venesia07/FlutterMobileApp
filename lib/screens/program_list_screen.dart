@@ -256,14 +256,20 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: 1,
         onTap: (index) {
-          if (index == 0) {
-            // Navigate to Home Screen
-          } else if (index == 1) {
-            // Already on Program List Screen
-          } else if (index == 2) {
-            // Navigate to Profile Screen
-          }
-        },
+        switch (index) {
+          case 0:
+            Navigator.pushNamed(context, '/home');
+            break;
+
+          case 1:
+            // Already on Program List
+            break;
+
+          case 2:
+            Navigator.pushNamed(context, '/learnerProfile');
+            break;
+        }
+      },       
       ),
     );
   }

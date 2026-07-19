@@ -40,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int get remoteCount => programs.where((p) => p.location == "Remote").length;
 
-  void _openList() => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProgramListScreen()));
-  void _openDetails(Program p) => Navigator.push(context, MaterialPageRoute(builder: (_) => ProgramDetailsScreen(program: p)));
-  void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$label — coming soon")));
+void _openList() {Navigator.pushNamed(context, '/programs');}
+void _openDetails(Program p) => Navigator.push(context, MaterialPageRoute(builder: (_) => ProgramDetailsScreen(program: p)));
+void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$label — coming soon")));
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: 0,
         onTap: (i) {
           if (i == 1) _openList();
-          if (i == 2) _comingSoon("Profile");
+          if (i == 2) Navigator.pushNamed(context, '/learnerProfile');
         },
       ),
     );
@@ -312,8 +312,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _quickActions() {
     final icons = [Icons.menu_book, Icons.person, Icons.bookmark_border, Icons.notifications_none];
     final labels = ["Programs", "Profile", "Saved", "Alerts"];
-    final taps = [_openList, () => _comingSoon("Profile"), () => _comingSoon("Saved Programs"), () => _comingSoon("Notifications")];
-    return GridView.builder(
+    final taps = [
+      _openList,
+      () => Navigator.pushNamed(context, '/learnerProfile'),
+      () => _comingSoon("Saved Programs"),
+      () => _comingSoon("Notifications"),
+    ];    return GridView.builder(
       itemCount: icons.length,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

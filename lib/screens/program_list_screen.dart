@@ -81,6 +81,7 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
       appBar: AppBar(
         title: const Text("All Programs"),
         centerTitle: true,
+        
       ),
 
       body: Column(

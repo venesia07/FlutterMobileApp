@@ -7,6 +7,7 @@ class ProgramManagementScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -19,354 +20,312 @@ class ProgramManagementScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black87),
+        iconTheme: const IconThemeData(
+          color: Colors.black87,
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
-            onPressed: () {
-              // Navigate to create program screen
-            },
+            onPressed: () {},
           ),
         ],
       ),
+
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
+
         child: Column(
           children: [
-            // Search Bar
+
+            // Search bar
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
               ),
+
               child: Row(
                 children: [
-                  Icon(Icons.search, color: Colors.grey[400], size: 20),
+
+                  Icon(
+                    Icons.search,
+                    color: Colors.grey[400],
+                  ),
+
                   const SizedBox(width: 12),
-                  Expanded(
+
+                  const Expanded(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: 'Search programs...',
-                        hintStyle: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 14,
-                        ),
+                        hintText: "Search programs...",
                         border: InputBorder.none,
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 14,
-                        ),
                       ),
-                      onChanged: (value) {
-                        // Handle search
-                      },
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.filter_list,
-                      color: Colors.grey[600],
-                      size: 22,
-                    ),
-                    onPressed: () {
-                      // Handle filter
-                    },
+
+                  Icon(
+                    Icons.filter_list,
+                    color: Colors.grey,
                   ),
+
                 ],
               ),
             ),
+
+
             const SizedBox(height: 16),
 
-            // Filter Chips
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+
+            // Filters
+            SizedBox(
+              height: 40,
+
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+
                 children: [
-                  _buildFilterChip('All', true),
-                  const SizedBox(width: 8),
-                  _buildFilterChip('Upcoming', false),
-                  const SizedBox(width: 8),
-                  _buildFilterChip('Completed', false),
-                  const SizedBox(width: 8),
-                  _buildFilterChip('Online', false),
-                  const SizedBox(width: 8),
-                  _buildFilterChip('In-Person', false),
-                  const SizedBox(width: 8),
-                  _buildFilterChip('Hybrid', false),
+
+                  _filterChip("All"),
+                  _filterChip("Upcoming"),
+                  _filterChip("Completed"),
+                  _filterChip("Online"),
+                  _filterChip("In-Person"),
+                  _filterChip("Hybrid"),
+
                 ],
               ),
             ),
-            const SizedBox(height: 16),
 
-            // Program Cards
-            _buildProgramCard(
-              title: 'Leadership Fundamentals',
-              date: 'Aug 12, 2026',
-              type: 'Online',
-              status: 'Upcoming',
-              statusColor: Colors.blue,
-              onEdit: () {},
-              onRemove: () {},
-            ),
-            const SizedBox(height: 12),
-            _buildProgramCard(
-              title: 'Data Analytics Bootcamp',
-              date: 'Aug 19, 2026',
-              type: 'In-Person',
-              status: 'Upcoming',
-              statusColor: Colors.blue,
-              onEdit: () {},
-              onRemove: () {},
-            ),
-            const SizedBox(height: 12),
-            _buildProgramCard(
-              title: 'Communication & Presentation',
-              date: 'Sep 3, 2026',
-              type: 'Online',
-              status: 'Upcoming',
-              statusColor: Colors.blue,
-              onEdit: () {},
-              onRemove: () {},
-            ),
-            const SizedBox(height: 12),
-            _buildProgramCard(
-              title: 'Project Management Pro',
-              date: 'Sep 15, 2026',
-              type: 'Hybrid',
-              status: 'Closed',
-              statusColor: Colors.grey,
-              onEdit: () {},
-              onRemove: () {},
-            ),
-            const SizedBox(height: 12),
-            _buildProgramCard(
-              title: 'Design Thinking Workshop',
-              date: 'Oct 2, 2026',
-              type: 'In-Person',
-              status: 'Upcoming',
-              statusColor: Colors.blue,
-              onEdit: () {},
-              onRemove: () {},
-            ),
+
             const SizedBox(height: 20),
+
+
+            // Programs
+            _programCard(
+              "Leadership Fundamentals",
+              "Aug 12, 2026",
+              "Online",
+              "Upcoming",
+            ),
+
+            _programCard(
+              "Data Analytics Bootcamp",
+              "Aug 19, 2026",
+              "In-Person",
+              "Upcoming",
+            ),
+
+            _programCard(
+              "Communication & Presentation",
+              "Sep 3, 2026",
+              "Online",
+              "Upcoming",
+            ),
+
+            _programCard(
+              "Project Management Pro",
+              "Sep 15, 2026",
+              "Hybrid",
+              "Closed",
+            ),
+
+            _programCard(
+              "Design Thinking Workshop",
+              "Oct 2, 2026",
+              "In-Person",
+              "Upcoming",
+            ),
+
           ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.green[700],
-          unselectedItemColor: Colors.grey,
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 11,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 11,
-          ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard_outlined),
-              activeIcon: Icon(Icons.dashboard),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_outlined),
-              activeIcon: Icon(Icons.grid_view),
-              label: 'Programs',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              activeIcon: Icon(Icons.settings),
-              label: 'Settings',
-            ),
-          ],
-          currentIndex: 1,
-          onTap: (index) {
-            // Handle navigation
-          },
         ),
       ),
     );
   }
 
-  Widget _buildFilterChip(String label, bool isSelected) {
-    return FilterChip(
-      label: Text(
-        label,
-        style: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          color: isSelected ? Colors.white : Colors.grey[700],
+
+
+  Widget _filterChip(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+
+      child: Chip(
+        label: Text(text),
+
+        backgroundColor:
+            text == "All"
+                ? Colors.green
+                : Colors.grey[200],
+
+        labelStyle: TextStyle(
+          color:
+              text == "All"
+                  ? Colors.white
+                  : Colors.black87,
         ),
       ),
-      selected: isSelected,
-      onSelected: (selected) {
-        // Handle chip selection
-      },
-      backgroundColor: Colors.grey[100],
-      selectedColor: Colors.green[700],
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: BorderSide(
-          color: isSelected ? Colors.green[700]! : Colors.transparent,
-          width: 0,
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
     );
   }
 
-  Widget _buildProgramCard({
-    required String title,
-    required String date,
-    required String type,
-    required String status,
-    required Color statusColor,
-    required VoidCallback onEdit,
-    required VoidCallback onRemove,
-  }) {
+
+
+  Widget _programCard(
+    String title,
+    String date,
+    String type,
+    String status,
+  ) {
+
     return Container(
+      margin: const EdgeInsets.only(
+        bottom: 12,
+      ),
+
       padding: const EdgeInsets.all(16),
+
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+
+        borderRadius:
+            BorderRadius.circular(12),
+
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.05),
+            color: Colors.grey.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
         ],
       ),
+
+
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
+
         children: [
-          // Title Row
+
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+
             children: [
+
               Expanded(
                 child: Text(
                   title,
+
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    fontWeight:
+                        FontWeight.bold,
                   ),
                 ),
               ),
-              // Action Buttons
-              Row(
-                children: [
-                  // Status Badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(
+
+
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(
                       horizontal: 10,
-                      vertical: 4,
+                      vertical: 5,
                     ),
-                    decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      status,
-                      style: TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w500,
-                        color: statusColor,
-                      ),
-                    ),
+
+                decoration: BoxDecoration(
+                  color: status == "Closed"
+                      ? Colors.grey[200]
+                      : Colors.blue[50],
+
+                  borderRadius:
+                      BorderRadius.circular(12),
+                ),
+
+
+                child: Text(
+                  status,
+
+                  style: TextStyle(
+                    color: status == "Closed"
+                        ? Colors.grey
+                        : Colors.blue,
+                    fontSize: 12,
                   ),
-                  const SizedBox(width: 8),
-                  // Edit Button
-                  InkWell(
-                    onTap: onEdit,
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.edit_outlined,
-                        size: 18,
-                        color: Colors.blue[700],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  // Remove Button
-                  InkWell(
-                    onTap: onRemove,
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.red[50],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.delete_outline,
-                        size: 18,
-                        color: Colors.red[700],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
+
             ],
           ),
-          const SizedBox(height: 8),
-          // Date and Type
+
+
+          const SizedBox(height: 10),
+
+
           Row(
             children: [
+
               Icon(
-                Icons.calendar_today_outlined,
+                Icons.calendar_today,
                 size: 14,
                 color: Colors.grey[500],
               ),
-              const SizedBox(width: 4),
+
+              const SizedBox(width: 5),
+
+
               Text(
                 date,
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
-              ),
-              const SizedBox(width: 16),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  type,
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey[600],
-                  ),
+                style: TextStyle(
+                  color: Colors.grey[600],
                 ),
               ),
+
+
+              const SizedBox(width: 15),
+
+
+              Text(
+                type,
+                style: TextStyle(
+                  color: Colors.grey[600],
+                ),
+              ),
+
             ],
           ),
+
+
+          const SizedBox(height: 12),
+
+
+          Row(
+            children: [
+
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.blue,
+                ),
+              ),
+
+
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.delete,
+                  color: Colors.red,
+                ),
+              ),
+
+            ],
+          )
+
         ],
       ),
     );

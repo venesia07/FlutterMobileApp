@@ -7,6 +7,17 @@
     "category": "Technology",
     "startDate": "2026-08-01",
     "endDate": "2026-09-30",
+    "requirements": [
+      "Basic programming knowledge",
+      "Laptop",
+      "Reliable internet connection"
+    ],
+    "skills": [
+      "Flutter",
+      "Dart",
+      "Git",
+      "UI Design"
+    ],
     "image": "assets/images/mobile_app_dev_image.jpg"
   },
   {
@@ -17,6 +28,17 @@
     "category": "Technology",
     "startDate": "2026-09-10",
     "endDate": "2026-11-10",
+    "requirements": [
+      "Basic computer knowledge",
+      "Interest in cyber security",
+      "Laptop"
+    ],
+    "skills": [
+      "Networking",
+      "Linux",
+      "Security",
+      "Problem Solving"
+    ],
     "image": "assets/images/cyber_security.jpg"
   },
   {
@@ -27,6 +49,17 @@
     "category": "Data",
     "startDate": "2026-10-01",
     "endDate": "2026-12-15",
+    "requirements": [
+      "Basic mathematics",
+      "Laptop",
+      "Interest in data analysis"
+    ],
+    "skills": [
+      "Python",
+      "SQL",
+      "Machine Learning",
+      "Data Visualization"
+    ],
     "image": "assets/images/data_science_image.jpg"
   }
 ]

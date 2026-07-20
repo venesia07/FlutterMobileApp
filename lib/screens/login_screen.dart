@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (isLearner) {
       Navigator.pushReplacementNamed(context, "/home");
     } else {
-      Navigator.pushReplacementNamed(context, "/admin-dashboard");
+      Navigator.pushReplacementNamed(context, "/admin-management");
     }
   }
 
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 15),
 
               const Text(
-                "Welcome Back",
+                "Welcome",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,

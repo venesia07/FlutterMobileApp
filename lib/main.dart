@@ -10,7 +10,7 @@ import 'screens/profile/learner_profile_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/splash_screen.dart';
-import 'screens/admin_home_screen.dart';
+import 'screens/program_management_screen.dart';
 
 //import 'theme/app_theme.dart';
 
@@ -35,10 +35,10 @@ class ExcelerateApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
          '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
-        '/admin-dashboard': (context) => const AdminDashboardScreen(),
         '/signup': (context) => const SignupScreen(),
         '/home': (context) => const HomeScreen(),
         '/programs': (context) => const ProgramListScreen(),
+         "/admin-management": (context) => const ProgramManagementScreen(),
         '/application': (context) => const ApplicationScreen(),
         '/leaveReview': (context) => const ReviewScreen(),
         '/learnerProfile': (context) => const LearnerProfileScreen(),

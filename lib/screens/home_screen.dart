@@ -14,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<Program> programs = [
     Program(
+      id: 1,
+      category: "Tech",
       title: "Mobile App Development",
       startDate: "20 July 2026",
       endDate: "20 August 2026",
@@ -24,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
       image: "assets/images/mobile_app_dev_image.jpg",
     ),
     Program(
+      id: 2,
+      category: "Tech",
       title: "Data Analytics",
       startDate: "01 May 2027",
       endDate: "01 June 2027",

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Mobile App Development",
+    "description": "Learn Flutter and Dart while building cross-platform mobile applications.",
+    "location": "Remote",
+    "category": "Technology",
+    "startDate": "2026-08-01",
+    "endDate": "2026-09-30",
+    "image": "assets/images/mobile_app_dev_image.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Cyber Security",
+    "description": "Develop practical cyber security skills through hands-on learning.",
+    "location": "Johannesburg",
+    "category": "Technology",
+    "startDate": "2026-09-10",
+    "endDate": "2026-11-10",
+    "image": "assets/images/cyber_security.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Data Science",
+    "description": "Learn data analysis, machine learning and visualization.",
+    "location": "Cape Town",
+    "category": "Data",
+    "startDate": "2026-10-01",
+    "endDate": "2026-12-15",
+    "image": "assets/images/data_science_image.jpg"
+  }
+]

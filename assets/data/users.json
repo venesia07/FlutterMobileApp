@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Learner User",
+    "email": "learner@excelerate.com",
+    "password": "Password123",
+    "role": "learner"
+  },
+  {
+    "id": 2,
+    "name": "Admin User",
+    "email": "admin@excelerate.com",
+    "password": "Admin123",
+    "role": "admin"
+  }
+]

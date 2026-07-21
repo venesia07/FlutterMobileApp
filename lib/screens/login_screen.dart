@@ -11,6 +11,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLearner = true;
   bool obscurePassword = true;
 
+  final _formKey = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -38,258 +40,257 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30),
 
-          child: Column(
-            children: [
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
 
-              const SizedBox(height: 40),
+                // LOGO
+                Image.asset("assets/images/excelerate_logo.png", height: 120),
 
-              // LOGO
-              Image.asset(
-                "assets/images/excelerate_logo.png",
-                height: 120,
-              ),
+                const SizedBox(height: 15),
 
-              const SizedBox(height: 15),
-
-              const Text(
-                "Welcome",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                "Learn • Grow • Succeed",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-
-              const SizedBox(height: 35),
-
-              // ROLE SELECTOR
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-
-                child: Row(
-                  children: [
-
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isLearner = true;
-                          });
-                        },
-
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-
-                          decoration: BoxDecoration(
-                            color: isLearner
-                                ? Colors.red
-                                : Colors.transparent,
-
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-
-                          child: Text(
-                            "Learner",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: isLearner
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isLearner = false;
-                          });
-                        },
-
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-
-                          decoration: BoxDecoration(
-                            color: !isLearner
-                                ? Colors.red
-                                : Colors.transparent,
-
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-
-                          child: Text(
-                            "Admin",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: !isLearner
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 35),
-
-              TextField(
-                controller: emailController,
-
-                decoration: InputDecoration(
-                  hintText: "Email",
-
-                  prefixIcon: const Icon(Icons.email),
-
-                  filled: true,
-                  fillColor: Colors.white,
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              TextField(
-                controller: passwordController,
-                obscureText: obscurePassword,
-
-                decoration: InputDecoration(
-                  hintText: "Password",
-
-                  prefixIcon: const Icon(Icons.lock),
-
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      obscurePassword
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        obscurePassword = !obscurePassword;
-                      });
-                    },
-                  ),
-
-                  filled: true,
-                  fillColor: Colors.white,
-
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-
-                  child: const Text(
-                    "Forgot Password?",
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              SizedBox(
-                width: double.infinity,
-
-                child: ElevatedButton(
-                  onPressed: login,
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                    ),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-
-                  child: Text(
-                    isLearner
-                        ? "Login as Learner"
-                        : "Login as Admin",
-
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              if (isLearner)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-
-                    const Text(
-                      "Don't have an account?",
-                    ),
-
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          "/signup",
-                        );
-                      },
-
-                      child: const Text(
-                        "Sign Up",
-                      ),
-                    ),
-                  ],
-                ),
-
-              if (!isLearner)
                 const Text(
-                  "Administrator accounts are created by Excelerate.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey,
+                  "Welcome",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+
+                const SizedBox(height: 8),
+
+                Text(
+                  "Learn • Grow • Succeed",
+                  style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                ),
+
+                const SizedBox(height: 35),
+
+                // ROLE SELECTOR
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isLearner = true;
+                            });
+                          },
+
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+
+                            decoration: BoxDecoration(
+                              color: isLearner
+                                  ? Colors.red
+                                  : Colors.transparent,
+
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+
+                            child: Text(
+                              "Learner",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: isLearner ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isLearner = false;
+                            });
+                          },
+
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+
+                            decoration: BoxDecoration(
+                              color: !isLearner
+                                  ? Colors.red
+                                  : Colors.transparent,
+
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+
+                            child: Text(
+                              "Admin",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: !isLearner ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 
-              const SizedBox(height: 30),
-            ],
+                const SizedBox(height: 35),
+
+                TextFormField(
+                  controller: emailController,
+
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Email is required";
+                    }
+
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return "Enter a valid email";
+                    }
+
+                    return null;
+                  },
+
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    prefixIcon: const Icon(Icons.email),
+
+                    filled: true,
+                    fillColor: Colors.white,
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                TextFormField(
+                  controller: passwordController,
+                  obscureText: obscurePassword,
+
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Password is required";
+                    }
+
+                    if (value.length < 6) {
+                      return "Password must be at least 6 characters";
+                    }
+
+                    return null;
+                  },
+
+                  decoration: InputDecoration(
+                    hintText: "Password",
+
+                    prefixIcon: const Icon(Icons.lock),
+
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          obscurePassword = !obscurePassword;
+                        });
+                      },
+                    ),
+
+                    filled: true,
+                    fillColor: Colors.white,
+
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {},
+
+                    child: const Text("Forgot Password?"),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                SizedBox(
+                  width: double.infinity,
+
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        login();
+                      }
+                    },
+
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+
+                    child: Text(
+                      isLearner ? "Login as Learner" : "Login as Admin",
+
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 25),
+
+                if (isLearner)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+                      const Text("Don't have an account?"),
+
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/signup");
+                        },
+
+                        child: const Text("Sign Up"),
+                      ),
+                    ],
+                  ),
+
+                if (!isLearner)
+                  const Text(
+                    "Administrator accounts are created by Excelerate.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey),
+                  ),
+
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),

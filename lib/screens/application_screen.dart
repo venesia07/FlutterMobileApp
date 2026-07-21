@@ -31,22 +31,77 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
   }
 
   void submitApplication() {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Application submitted successfully!"),
-          backgroundColor: Colors.green,
-        ),
-      );
 
-      _formKey.currentState!.reset();
+  if (_formKey.currentState!.validate()) {
 
-      _nameController.clear();
-      _emailController.clear();
-      _phoneController.clear();
-      _motivationController.clear();
-    }
+    showDialog(
+
+      context: context,
+
+      barrierDismissible: false,
+
+      builder: (context) {
+
+        return AlertDialog(
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+
+          title: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 45,
+              ),
+              SizedBox(height: 10),
+              Text(
+                "Application Submitted",
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+
+          content: const Text(
+            "Thank you for applying!\n\nYour application has been submitted successfully. Our team will contact you if you are shortlisted.",
+          ),
+
+          actions: [
+
+            ElevatedButton(
+
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+              ),
+
+              onPressed: () {
+
+                Navigator.pop(context);
+
+                Navigator.pop(context);
+
+              },
+
+              child: const Text(
+                "OK",
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          ],
+        );
+      },
+    );
+
+    _formKey.currentState!.reset();
+
+    _nameController.clear();
+    _emailController.clear();
+    _phoneController.clear();
+    _motivationController.clear();
   }
+}
 
   @override
 Widget build(BuildContext context) {
@@ -82,28 +137,28 @@ Widget build(BuildContext context) {
 
             const SizedBox(height: 20),
 
-          Center(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text.rich(
               TextSpan(
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
-                children: [
+                children: const [
                   TextSpan(text: "Start your journey with "),
                   TextSpan(
                     text: "Excelerate",
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
+                    style: TextStyle(color: Colors.red),
                   ),
-                  
                 ],
               ),
               textAlign: TextAlign.center,
+              softWrap: true,
             ),
           ),
+
           Center(
             child: Text(
                             "Learn • Grow • Succeed",
@@ -141,12 +196,14 @@ Widget build(BuildContext context) {
                   const SizedBox(height: 15),
 
                   Text(
-                    widget.program.title,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  widget.program.title,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
 
                   const SizedBox(height: 10),
 
@@ -173,32 +230,42 @@ Widget build(BuildContext context) {
                   const SizedBox(height: 15),
 
                   Row(
-                    children: [
-                      const Icon(Icons.location_on,
-                          color: Colors.red),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: Colors.red,
+                    ),
 
-                      const SizedBox(width: 8),
+                    const SizedBox(width: 8),
 
-                      Text(widget.program.location),
-                    ],
-                  ),
+                    Expanded(
+                      child: Text(
+                        widget.program.location,
+                      ),
+                    ),
+                  ],
+                ),
 
                   const SizedBox(height: 8),
 
                   Row(
-                    children: [
-                      const Icon(Icons.calendar_today,
-                          color: Colors.red),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.calendar_today,
+                      color: Colors.red,
+                    ),
 
-                      const SizedBox(width: 8),
+                    const SizedBox(width: 8),
 
-                      Expanded(
-                        child: Text(
-                          "${widget.program.startDate}  -  ${widget.program.endDate}",
-                        ),
+                    Expanded(
+                      child: Text(
+                        "Starts: ${widget.program.startDate}\nEnds: ${widget.program.endDate}",
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
 
                   const SizedBox(height: 15),
 
@@ -212,25 +279,43 @@ Widget build(BuildContext context) {
             ),
           ),
 
-          const SizedBox(height: 30),            
+          const SizedBox(height: 30),           
             
-            
+            const Divider(
+              thickness: 1,
+              height: 40,
+            ),
             const SizedBox(height: 8),
 
-            Text(
-              "Complete the form below to submit your application.",
-              style: TextStyle(
-                color: Colors.grey.shade700,
-                fontSize: 15,
+            const Text(
+                "Applicant Information",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
+
+              const SizedBox(height: 8),
+
+              Text(
+                "Please complete all required fields.",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 15,
+                ),
+              ),
+
+              const SizedBox(height: 25),
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
                   labelText: "Full Name",
                   prefixIcon: Icon(Icons.person_outline),
+                  filled: true,
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
                   ),
                 ),
                 validator: (value) {
@@ -248,8 +333,11 @@ Widget build(BuildContext context) {
                 decoration:  InputDecoration(
                   labelText: "Email",
                   prefixIcon: Icon(Icons.email_outlined),
+                  filled: true,
+                  fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
                   ),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -274,10 +362,13 @@ Widget build(BuildContext context) {
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
                 decoration:  InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
                   labelText: "Phone Number",
                   prefixIcon: Icon(Icons.call_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
                   ),
                 ),
                 validator: (value) {
@@ -296,8 +387,11 @@ Widget build(BuildContext context) {
                 decoration:  InputDecoration(
                   labelText: "Why are you applying",
                   prefixIcon: Icon(Icons.edit_note_outlined),
-                  border: OutlineInputBorder(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(                    
                     borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
                   ),
                 ),
                 validator: (value) {
@@ -337,8 +431,8 @@ Widget build(BuildContext context) {
                 child: const Text(
                   "Submit Application",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

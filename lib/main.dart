@@ -39,7 +39,6 @@ class ExcelerateApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/programs': (context) => const ProgramListScreen(),
          "/admin-management": (context) => const ProgramManagementScreen(),
-        '/leaveReview': (context) => const ReviewScreen(),
         '/learnerProfile': (context) => const LearnerProfileScreen(),
         '/adminProfile': (context) => const AdminProfileScreen(),
       },

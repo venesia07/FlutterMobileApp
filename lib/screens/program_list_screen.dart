@@ -14,6 +14,8 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
   // Sample programs
   final List<Program> programs = [
     Program(
+      id: 01,
+      category: "Tech",
       title: "Mobile App Development",
       startDate: "20 July 2026",
       endDate: "20 August 2026",
@@ -33,6 +35,8 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
       image: "assets/images/mobile_app_dev_image.jpg",
     ),
     Program(
+      id: 02,
+      category: "Tech",
       title: "Data Analytics",
       startDate: "01 May 2027",
       endDate: "01 June 2027",

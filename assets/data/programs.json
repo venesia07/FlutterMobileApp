@@ -10,7 +10,7 @@
     "requirements": [
       "Basic programming knowledge",
       "Laptop",
-      "Internet connection"
+      "Reliable internet connection"
     ],
     "skills": [
       "Flutter",
@@ -29,13 +29,37 @@
     "category": "Technology",
     "description": "Develop practical cyber security skills through hands-on learning.",
     "requirements": [
-      "Basic computer knowledge"
+      "Basic computer knowledge",
+      "Interest in cyber security",
+      "Laptop"
     ],
     "skills": [
       "Networking",
       "Linux",
-      "Security"
+      "Security",
+      "Problem Solving"
     ],
-    "image": "assets/images/cyber_security_image.jpg"
+    "image": "assets/images/cyber_security.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Data Science",
+    "startDate": "2026-10-01",
+    "endDate": "2026-12-15",
+    "location": "Cape Town",
+    "category": "Data",
+    "description": "Learn data analysis, machine learning and visualization.",
+    "requirements": [
+      "Basic mathematics",
+      "Laptop",
+      "Interest in data analysis"
+    ],
+    "skills": [
+      "Python",
+      "SQL",
+      "Machine Learning",
+      "Data Visualization"
+    ],
+    "image": "assets/images/data_science_image.jpg"
   }
 ]

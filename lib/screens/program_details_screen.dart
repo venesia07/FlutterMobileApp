@@ -227,7 +227,7 @@ SizedBox(
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ReviewScreen(),
+          builder: (context) => ReviewScreen(program: program, ),
         ),
       );
     },

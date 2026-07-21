@@ -49,6 +49,23 @@ class ProgramDetailsScreen extends StatelessWidget {
               ),
             ),
 
+            //Program Category
+            const SizedBox(height: 10),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.red.shade100,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                program.category,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
             const SizedBox(height: 15),
 
             // Location
@@ -177,7 +194,7 @@ class ProgramDetailsScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ApplicationScreen(),
+          builder: (context) => ApplicationScreen(program: program,),
         ),
       );
     },

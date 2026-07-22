@@ -33,14 +33,19 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
 
     try {
       final programs = await JsonService.loadPrograms();
-      print('✅ Loaded ${programs.length} programs'); // Debug
+      print('✅ Loaded ${programs.length} programs');
+
+      // 🔍 DEBUG: Print all unique locations
+      final locations = programs.map((p) => p.location).toSet();
+      print('📍 Available locations: $locations');
+
       setState(() {
         _allPrograms = programs;
         _filteredPrograms = programs;
         _isLoading = false;
       });
     } catch (e) {
-      print('❌ Error: $e'); // Debug
+      print('❌ Error: $e');
       setState(() {
         _errorMessage = 'Failed to load programs. Please try again.';
         _isLoading = false;
@@ -81,13 +86,19 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
       }).toList();
     }
 
-    // Apply category filter (using location as filter)
+    // Apply category filter using contains for partial matching
     if (_selectedFilter != 'All') {
+      print('🔍 Filtering by: $_selectedFilter');
       result = result.where((program) {
-        return program.location == _selectedFilter;
+        final matches = program.location.toLowerCase().contains(
+          _selectedFilter.toLowerCase(),
+        );
+        print('📍 ${program.title}: "${program.location}" matches? $matches');
+        return matches;
       }).toList();
     }
 
+    print('📊 Filtered count: ${result.length}');
     setState(() {
       _filteredPrograms = result;
     });
@@ -152,7 +163,7 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
           Expanded(child: _buildContent()),
         ],
       ),
-      bottomNavigationBar: _buildBottomNavigation(),
+      // 🚀 BOTTOM NAVIGATION REMOVED
     );
   }
 
@@ -196,9 +207,17 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
     );
   }
 
-  // FILTER CHIPS
+  // FILTER CHIPS - DYNAMIC BASED ON AVAILABLE LOCATIONS
   Widget _buildFilterChips() {
-    final filters = ['All', 'Online', 'In-Person', 'Hybrid'];
+    // Get unique locations from your programs
+    final Set<String> locationSet = _allPrograms
+        .map((p) => p.location)
+        .where((loc) => loc.isNotEmpty)
+        .toSet();
+
+    // Build filter list: 'All' + all unique locations
+    final List<String> filters = ['All', ...locationSet];
+
     return Container(
       height: 40,
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -486,55 +505,6 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  // BOTTOM NAVIGATION
-  Widget _buildBottomNavigation() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.green[700],
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 11,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 11,
-        ),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
-            activeIcon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view_outlined),
-            activeIcon: Icon(Icons.grid_view),
-            label: 'Programs',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            activeIcon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: 1,
-        onTap: (index) {},
       ),
     );
   }

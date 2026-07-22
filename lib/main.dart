@@ -28,22 +28,27 @@ class ExcelerateApp extends StatelessWidget {
       title: 'Excelerate App',
       //theme: AppTheme.lightTheme,
 
-      // Temporary start screen until LoginScreen is added
+      // 🔥 TEMPORARY: Directly open Program Management Screen for testing
+      home: const ProgramManagementScreen(),
+
+      // Original routes (commented out for testing)
+      /*
       initialRoute: '/splash',
 
       routes: {
         '/': (context) => const SplashScreen(),
-         '/splash': (context) => const SplashScreen(),
+        '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignupScreen(),
         '/home': (context) => const HomeScreen(),
         '/programs': (context) => const ProgramListScreen(),
-         "/admin-management": (context) => const ProgramManagementScreen(),
+        '/admin-management': (context) => const ProgramManagementScreen(),
         '/application': (context) => const ApplicationScreen(),
         '/leaveReview': (context) => const ReviewScreen(),
         '/learnerProfile': (context) => const LearnerProfileScreen(),
         '/adminProfile': (context) => const AdminProfileScreen(),
       },
+      */
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/program_model.dart';
+import '../models/program.dart'; // Using the existing model
 import '../services/json_service.dart';
 
 class ProgramManagementScreen extends StatefulWidget {
@@ -33,12 +33,14 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
 
     try {
       final programs = await JsonService.loadPrograms();
+      print('✅ Loaded ${programs.length} programs'); // Debug
       setState(() {
         _allPrograms = programs;
         _filteredPrograms = programs;
         _isLoading = false;
       });
     } catch (e) {
+      print('❌ Error: $e'); // Debug
       setState(() {
         _errorMessage = 'Failed to load programs. Please try again.';
         _isLoading = false;
@@ -70,24 +72,51 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
         return program.title.toLowerCase().contains(
               _searchQuery.toLowerCase(),
             ) ||
-            program.mode.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            program.instructor.toLowerCase().contains(
+            program.location.toLowerCase().contains(
+              _searchQuery.toLowerCase(),
+            ) ||
+            program.description.toLowerCase().contains(
               _searchQuery.toLowerCase(),
             );
       }).toList();
     }
 
-    // Apply category filter
+    // Apply category filter (using location as filter)
     if (_selectedFilter != 'All') {
       result = result.where((program) {
-        return program.status == _selectedFilter ||
-            program.mode == _selectedFilter;
+        return program.location == _selectedFilter;
       }).toList();
     }
 
     setState(() {
       _filteredPrograms = result;
     });
+  }
+
+  // Helper to determine status based on dates
+  String _getProgramStatus(Program program) {
+    final now = DateTime.now();
+    final start = DateTime.tryParse(program.startDate);
+    final end = DateTime.tryParse(program.endDate);
+
+    if (start == null || end == null) return 'Upcoming';
+
+    if (now.isBefore(start)) {
+      return 'Upcoming';
+    } else if (now.isAfter(end)) {
+      return 'Completed';
+    } else {
+      return 'Ongoing';
+    }
+  }
+
+  // Helper to get category/skills as a string
+  String _getCategoryString(Program program) {
+    // Check if skills has values (which might come from category)
+    if (program.skills.isNotEmpty) {
+      return program.skills.join(', ');
+    }
+    return 'No category listed';
   }
 
   @override
@@ -169,14 +198,7 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
 
   // FILTER CHIPS
   Widget _buildFilterChips() {
-    final filters = [
-      'All',
-      'Upcoming',
-      'Closed',
-      'Online',
-      'In-Person',
-      'Hybrid',
-    ];
+    final filters = ['All', 'Online', 'In-Person', 'Hybrid'];
     return Container(
       height: 40,
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -336,16 +358,15 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
     );
   }
 
-  // PROGRAM CARD (Dynamic Data)
+  // PROGRAM CARD (Dynamic Data using existing Program model)
   Widget _buildProgramCard(Program program) {
+    final status = _getProgramStatus(program);
     final statusColors = {
       'Upcoming': Colors.blue,
-      'Closed': Colors.grey,
       'Ongoing': Colors.green,
       'Completed': Colors.orange,
     };
-
-    final statusColor = statusColors[program.status] ?? Colors.grey;
+    final statusColor = statusColors[status] ?? Colors.grey;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -389,7 +410,7 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  program.status,
+                  status,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -400,49 +421,53 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
             ],
           ),
           const SizedBox(height: 10),
-          // Instructor
-          Row(
-            children: [
-              Icon(Icons.person_outline, size: 14, color: Colors.grey[500]),
-              const SizedBox(width: 5),
-              Text(
-                program.instructor,
-                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-              ),
-            ],
+          // Description (truncated)
+          Text(
+            program.description,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 14, color: Colors.grey[600]),
           ),
           const SizedBox(height: 6),
-          // Date, Mode, and Registrations
+          // Date Range
           Row(
             children: [
               Icon(Icons.calendar_today, size: 14, color: Colors.grey[500]),
               const SizedBox(width: 5),
               Text(
-                program.date,
+                '${program.startDate} - ${program.endDate}',
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
               ),
-              const SizedBox(width: 15),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  program.mode,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey[600],
-                  ),
-                ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          // Location
+          Row(
+            children: [
+              Icon(
+                Icons.location_on_outlined,
+                size: 14,
+                color: Colors.grey[500],
               ),
-              const SizedBox(width: 15),
-              Icon(Icons.people_outline, size: 14, color: Colors.grey[500]),
               const SizedBox(width: 5),
               Text(
-                '${program.registered}/${program.spots}',
+                program.location,
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          // Category/Skills
+          Row(
+            children: [
+              Icon(Icons.category_outlined, size: 14, color: Colors.grey[500]),
+              const SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  _getCategoryString(program),
+                  style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

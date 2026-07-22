@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -8,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool isLearner = true;
   bool obscurePassword = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -23,10 +25,44 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void login() {
-    if (isLearner) {
+  Future<void> login() async {
+    // Load users.json
+    final String response = await rootBundle.loadString(
+      'assets/data/users.json',
+    );
+
+    // Convert JSON data into a Dart list
+    final List<dynamic> users = jsonDecode(response);
+
+    // Get entered credentials
+    final String email = emailController.text.trim();
+    final String password = passwordController.text;
+
+    // Find a user with matching email and password
+    final user = users.cast<Map<String, dynamic>>().where((user) {
+      return user['email'] == email && user['password'] == password;
+    }).firstOrNull;
+
+    // If no matching user is found
+    if (user == null) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Invalid email or password")),
+      );
+
+      return;
+    }
+
+    // Get the user's role from users.json
+    final String role = user['role'];
+
+    if (!mounted) return;
+
+    // Navigate based on the user's role
+    if (role == 'learner') {
       Navigator.pushReplacementNamed(context, "/home");
-    } else {
+    } else if (role == 'admin') {
       Navigator.pushReplacementNamed(context, "/admin-management");
     }
   }
@@ -42,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
           child: Form(
             key: _formKey,
+
             child: Column(
               children: [
                 const SizedBox(height: 40),
@@ -65,82 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 35),
 
-                // ROLE SELECTOR
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isLearner = true;
-                            });
-                          },
-
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-
-                            decoration: BoxDecoration(
-                              color: isLearner
-                                  ? Colors.red
-                                  : Colors.transparent,
-
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-
-                            child: Text(
-                              "Learner",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: isLearner ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isLearner = false;
-                            });
-                          },
-
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 14),
-
-                            decoration: BoxDecoration(
-                              color: !isLearner
-                                  ? Colors.red
-                                  : Colors.transparent,
-
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-
-                            child: Text(
-                              "Admin",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: !isLearner ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 35),
-
+                // EMAIL FIELD
                 TextFormField(
                   controller: emailController,
 
@@ -158,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   decoration: InputDecoration(
                     hintText: "Email",
+
                     prefixIcon: const Icon(Icons.email),
 
                     filled: true,
@@ -172,8 +135,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 20),
 
+                // PASSWORD FIELD
                 TextFormField(
                   controller: passwordController,
+
                   obscureText: obscurePassword,
 
                   validator: (value) {
@@ -199,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? Icons.visibility_off
                             : Icons.visibility,
                       ),
+
                       onPressed: () {
                         setState(() {
                           obscurePassword = !obscurePassword;
@@ -218,8 +184,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 12),
 
+                // FORGOT PASSWORD
                 Align(
                   alignment: Alignment.centerRight,
+
                   child: TextButton(
                     onPressed: () {},
 
@@ -229,6 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 20),
 
+                // LOGIN BUTTON
                 SizedBox(
                   width: double.infinity,
 
@@ -251,10 +220,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
 
-                    child: Text(
-                      isLearner ? "Login as Learner" : "Login as Admin",
+                    child: const Text(
+                      "Login",
 
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -264,29 +233,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 const SizedBox(height: 25),
 
-                if (isLearner)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                // SIGN UP
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
 
-                    children: [
-                      const Text("Don't have an account?"),
+                  children: [
+                    const Text("Don't have an account?"),
 
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/signup");
-                        },
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/signup");
+                      },
 
-                        child: const Text("Sign Up"),
-                      ),
-                    ],
-                  ),
-
-                if (!isLearner)
-                  const Text(
-                    "Administrator accounts are created by Excelerate.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey),
-                  ),
+                      child: const Text("Sign Up"),
+                    ),
+                  ],
+                ),
 
                 const SizedBox(height: 30),
               ],

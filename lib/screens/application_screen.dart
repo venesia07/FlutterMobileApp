@@ -228,7 +228,26 @@ Widget build(BuildContext context) {
                   ),
 
                   const SizedBox(height: 15),
+                  
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.computer,
+                      color: Colors.red,
+                    ),
 
+                    const SizedBox(width: 8),
+
+                    Expanded(
+                      child: Text(
+                        widget.program.deliveryMethod,
+                      ),
+                    ),
+                  ],
+                ),
+
+                  const SizedBox(height: 8),
                   Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

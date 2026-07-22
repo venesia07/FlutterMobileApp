@@ -68,6 +68,23 @@ class ProgramDetailsScreen extends StatelessWidget {
 
             const SizedBox(height: 15),
 
+            // Delivery method
+            Row(
+              children: [
+                const Icon(
+                  Icons.computer,
+                  color: Colors.red,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  program.deliveryMethod,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
+
             // Location
             Row(
               children: [

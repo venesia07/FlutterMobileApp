@@ -163,7 +163,26 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         ),
 
                         const SizedBox(height: 12),
+                  
+                  Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.computer,
+                      color: Colors.red,
+                    ),
 
+                    const SizedBox(width: 8),
+
+                    Expanded(
+                      child: Text(
+                        widget.program.deliveryMethod,
+                      ),
+                    ),
+                  ],
+                ),
+
+                  const SizedBox(height: 8),
                         Row(
                           children: [
 

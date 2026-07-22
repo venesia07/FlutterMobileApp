@@ -3,6 +3,7 @@ class Program {
   final String title;
   final String startDate;
   final String endDate;
+  final String deliveryMethod;
   final String location;
   final String category;
   final String description;
@@ -15,6 +16,7 @@ class Program {
     required this.title,
     required this.startDate,
     required this.endDate,
+    required this.deliveryMethod,
     required this.location,
     required this.category,
     required this.description,
@@ -43,6 +45,7 @@ factory Program.fromJson(Map<String, dynamic> json) {
     title: json['title']?.toString() ?? 'Untitled',
     startDate: json['startDate']?.toString() ?? 'TBD',
     endDate: json['endDate']?.toString() ?? 'TBD',
+    deliveryMethod: json['deliveryMethod'].toString() ?? 'Unknown',
     location: json['location']?.toString() ?? 'Unknown',
     category: category ?? '',
     description:

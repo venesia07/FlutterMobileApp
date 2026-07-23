@@ -45,7 +45,7 @@ factory Program.fromJson(Map<String, dynamic> json) {
     title: json['title']?.toString() ?? 'Untitled',
     startDate: json['startDate']?.toString() ?? 'TBD',
     endDate: json['endDate']?.toString() ?? 'TBD',
-    deliveryMethod: json['deliveryMethod'].toString() ?? 'Unknown',
+    deliveryMethod: json['deliveryMethod']?.toString() ?? 'Unknown',
     location: json['location']?.toString() ?? 'Unknown',
     category: category ?? '',
     description:

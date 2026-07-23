@@ -44,7 +44,7 @@ class AboutUsScreen extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
                 padding: EdgeInsets.all(16),
@@ -69,7 +69,7 @@ class AboutUsScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            Card(
+            const Card(
               elevation: 4,
               child: Padding(
                 padding: EdgeInsets.all(16),

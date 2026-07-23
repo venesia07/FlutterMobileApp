@@ -3,14 +3,14 @@
     "id": 1,
     "name": "Learner User",
     "email": "learner@excelerate.com",
-    "password": "Password123",
+    "password": "Password@123",
     "role": "learner"
   },
   {
     "id": 2,
     "name": "Admin User",
     "email": "admin@excelerate.com",
-    "password": "Admin123",
+    "password": "Admin@123",
     "role": "admin"
   }
 ]

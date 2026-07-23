@@ -67,6 +67,72 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> forgotPassword() async {
+    final forgotEmailController = TextEditingController();
+
+    await showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text("Forgot Password?"),
+          content: TextField(
+            controller: forgotEmailController,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              hintText: "Enter your email",
+              prefixIcon: Icon(Icons.email),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+              },
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final email = forgotEmailController.text.trim();
+
+                if (email.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Please enter your email")),
+                  );
+                  return;
+                }
+
+                final String response = await rootBundle.loadString(
+                  'assets/data/users.json',
+                );
+
+                final List<dynamic> users = jsonDecode(response);
+
+                final userExists = users.any((user) => user['email'] == email);
+
+                if (!mounted || !dialogContext.mounted) return;
+
+                Navigator.pop(dialogContext);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      userExists
+                          ? "A password reset link has been sent to your email."
+                          : "No account found with this email.",
+                    ),
+                  ),
+                );
+              },
+              child: const Text("Reset Password"),
+            ),
+          ],
+        );
+      },
+    );
+
+    forgotEmailController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.centerRight,
 
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: forgotPassword,
 
                     child: const Text("Forgot Password?"),
                   ),

@@ -67,6 +67,7 @@ Map<String, dynamic> toJson() {
     'title': title,
     'startDate': startDate,
     'endDate': endDate,
+    'deliveryMethod': deliveryMethod,
     'location': location,
     'category': category,
     'description': description,

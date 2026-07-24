@@ -352,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _openList,
       () => Navigator.pushNamed(context, '/aboutUs'),
       () => Navigator.pushNamed(context, '/learnerProfile'),
-      () => _comingSoon("Notifications"),
+      () => Navigator.pushNamed(context, '/alerts'),
     ];    return GridView.builder(
       itemCount: icons.length,
       shrinkWrap: true,

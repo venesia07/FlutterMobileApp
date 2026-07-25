@@ -13,14 +13,16 @@ class AboutUsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.groups,
-              size: 80,
-              color: Colors.blue,
-            ),
-            const SizedBox(height: 20),
+            
+                Image.asset(
+                    "assets/images/excelerate_logo.png",
+                    height: 170,
+                  ),
+            
+
+              const SizedBox(height: 35),
 
             const Center(
               child: Text(

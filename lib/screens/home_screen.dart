@@ -63,8 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _openDetails(Program p) => Navigator.push(
       context, MaterialPageRoute(builder: (_) => ProgramDetailsScreen(program: p)));
-  void _comingSoon(String label) => ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text("$label — coming soon")));
 
   @override
   Widget build(BuildContext context) {
@@ -352,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _openList,
       () => Navigator.pushNamed(context, '/aboutUs'),
       () => Navigator.pushNamed(context, '/learnerProfile'),
-      () => _comingSoon("Notifications"),
+      () => Navigator.pushNamed(context, '/alerts'),
     ];    return GridView.builder(
       itemCount: icons.length,
       shrinkWrap: true,

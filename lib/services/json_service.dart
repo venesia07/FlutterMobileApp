@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '../models/program.dart';
 
@@ -10,7 +11,7 @@ class JsonService {
   static Future<List<Program>> loadPrograms() async {
     try {
       final String jsonString = await rootBundle.loadString(_programsPath);
-      print('✅ JSON loaded successfully');
+      debugPrint('✅ JSON loaded successfully');
 
       // Parse the JSON
       final decoded = json.decode(jsonString);
@@ -20,30 +21,30 @@ class JsonService {
       if (decoded is List) {
         // If it's already a list, use it directly
         programsJson = decoded;
-        print('📄 JSON is an array with ${programsJson.length} items');
+        debugPrint('📄 JSON is an array with ${programsJson.length} items');
       } else if (decoded is Map<String, dynamic> &&
           decoded.containsKey('programs')) {
         // If it's an object with a 'programs' key
         programsJson = decoded['programs'];
-        print('📄 JSON is an object with ${programsJson.length} programs');
+        debugPrint('📄 JSON is an object with ${programsJson.length} programs');
       } else {
         throw Exception('Unknown JSON format');
       }
 
       if (programsJson.isEmpty) {
-        print('⚠️ No programs found in JSON');
+        debugPrint('⚠️ No programs found in JSON');
         return [];
       }
 
       final programs = programsJson.map((json) {
-        print('📄 Processing: ${json['title'] ?? 'Untitled'}');
+        debugPrint('📄 Processing: ${json['title'] ?? 'Untitled'}');
         return Program.fromJson(json);
       }).toList();
 
-      print('✅ Successfully loaded ${programs.length} programs');
+      debugPrint('✅ Successfully loaded ${programs.length} programs');
       return programs;
     } catch (e) {
-      print('❌ Error loading programs: $e');
+      debugPrint('❌ Error loading programs: $e');
       throw Exception('Failed to load programs: ${e.toString()}');
     }
   }

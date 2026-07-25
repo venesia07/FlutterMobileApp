@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/about_us_screen.dart';
+import 'screens/alerts_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/program_list_screen.dart';
 import 'screens/profile/admin_profile_screen.dart';
@@ -35,6 +36,7 @@ class ExcelerateApp extends StatelessWidget {
         '/learnerProfile': (context) => const LearnerProfileScreen(),
         '/adminProfile': (context) => const AdminProfileScreen(),
         '/aboutUs': (context) => const AboutUsScreen(),
+        '/alerts': (context) => const AlertsScreen(),
       },
     );
   }

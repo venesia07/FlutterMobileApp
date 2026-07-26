@@ -10,6 +10,7 @@ import 'screens/profile/learner_profile_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/splash_screen.dart';
+import 'screens/admin_home_screen.dart';
 import 'screens/program_management_screen.dart';
 
 //import 'theme/app_theme.dart';
@@ -28,11 +29,7 @@ class ExcelerateApp extends StatelessWidget {
       title: 'Excelerate App',
       //theme: AppTheme.lightTheme,
 
-      // 🔥 TEMPORARY: Directly open Program Management Screen for testing
-      home: const ProgramManagementScreen(),
-
-      // Original routes (commented out for testing)
-      /*
+      // Use splash screen as starting point
       initialRoute: '/splash',
 
       routes: {
@@ -43,12 +40,12 @@ class ExcelerateApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/programs': (context) => const ProgramListScreen(),
         '/admin-management': (context) => const ProgramManagementScreen(),
+        '/admin-home': (context) => const AdminHomeScreen(),
+        '/adminProfile': (context) => const AdminProfileScreen(),
         '/application': (context) => const ApplicationScreen(),
         '/leaveReview': (context) => const ReviewScreen(),
         '/learnerProfile': (context) => const LearnerProfileScreen(),
-        '/adminProfile': (context) => const AdminProfileScreen(),
       },
-      */
     );
   }
 }

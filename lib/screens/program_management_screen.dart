@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/program.dart'; // Using the existing model
 import '../services/json_service.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 class ProgramManagementScreen extends StatefulWidget {
   const ProgramManagementScreen({super.key});
@@ -17,6 +18,7 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
   String _errorMessage = '';
   String _selectedFilter = 'All';
   String _searchQuery = '';
+  bool _showOnlyUpcoming = false;
 
   @override
   void initState() {
@@ -68,6 +70,13 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
     });
   }
 
+  void _toggleUpcomingFilter(bool? value) {
+    setState(() {
+      _showOnlyUpcoming = value ?? false;
+      _applyFilters();
+    });
+  }
+
   void _applyFilters() {
     List<Program> result = _allPrograms;
 
@@ -86,7 +95,7 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
       }).toList();
     }
 
-    // Apply category filter using contains for partial matching
+    // Apply location filter using contains for partial matching
     if (_selectedFilter != 'All') {
       print('🔍 Filtering by: $_selectedFilter');
       result = result.where((program) {
@@ -95,6 +104,14 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
         );
         print('📍 ${program.title}: "${program.location}" matches? $matches');
         return matches;
+      }).toList();
+    }
+
+    // Apply upcoming filter
+    if (_showOnlyUpcoming) {
+      result = result.where((program) {
+        final status = _getProgramStatus(program);
+        return status == 'Upcoming' || status == 'Ongoing';
       }).toList();
     }
 
@@ -147,6 +164,12 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.black87),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, '/admin-home');
+          },
+        ),
         actions: [
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadPrograms),
         ],
@@ -158,12 +181,26 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
           const SizedBox(height: 12),
           // Filter Chips
           _buildFilterChips(),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
+          // Upcoming Filter Toggle
+          _buildUpcomingToggle(),
+          const SizedBox(height: 8),
           // Content (Loading, Error, or List)
           Expanded(child: _buildContent()),
         ],
       ),
-      // 🚀 BOTTOM NAVIGATION REMOVED
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 1,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushReplacementNamed(context, '/admin-home');
+          } else if (index == 1) {
+            // Already on programs
+          } else if (index == 2) {
+            Navigator.pushReplacementNamed(context, '/adminProfile');
+          }
+        },
+      ),
     );
   }
 
@@ -198,6 +235,16 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
               ),
             ),
           ),
+          if (_searchQuery.isNotEmpty)
+            IconButton(
+              icon: Icon(Icons.clear, color: Colors.grey[400], size: 20),
+              onPressed: () {
+                setState(() {
+                  _searchQuery = '';
+                  _applyFilters();
+                });
+              },
+            ),
           IconButton(
             icon: Icon(Icons.filter_list, color: Colors.grey[600], size: 22),
             onPressed: () {},
@@ -251,6 +298,26 @@ class _ProgramManagementScreenState extends State<ProgramManagementScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           );
         },
+      ),
+    );
+  }
+
+  // UPCOMING FILTER TOGGLE
+  Widget _buildUpcomingToggle() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Checkbox(
+            value: _showOnlyUpcoming,
+            onChanged: _toggleUpcomingFilter,
+            activeColor: Colors.green[700],
+          ),
+          const Text(
+            'Show only Upcoming/Ongoing programs',
+            style: TextStyle(fontSize: 14, color: Colors.grey),
+          ),
+        ],
       ),
     );
   }

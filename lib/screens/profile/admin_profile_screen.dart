@@ -7,6 +7,7 @@ class AdminProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -205,19 +206,35 @@ class AdminProfileScreen extends StatelessWidget {
                     icon: Icons.announcement_outlined,
                     title: 'New Announcement',
                     subtitle: 'Broadcast to all learners',
-                    onTap: () {},
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Announcement feature coming soon!'),
+                          backgroundColor: Colors.blue,
+                        ),
+                      );
+                    },
                   ),
                   _buildActionItem(
                     icon: Icons.add_circle_outlined,
                     title: 'Create Program',
                     subtitle: 'Add a new learning program',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, '/admin-management');
+                    },
                   ),
                   _buildActionItem(
                     icon: Icons.feedback_outlined,
                     title: 'View Feedback',
                     subtitle: '47 pending responses',
-                    onTap: () {},
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Feedback feature coming soon!'),
+                          backgroundColor: Colors.orange,
+                        ),
+                      );
+                    },
                     badge: '47',
                   ),
                 ],
@@ -321,30 +338,19 @@ class AdminProfileScreen extends StatelessWidget {
           ],
         ),
       ),
-bottomNavigationBar: BottomNavBar(
-    currentIndex: 2,
-    onTap: (index) {
-      switch (index) {
-        case 0:
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/home',
-            (route) => false,
-          );
-          break;
-
-        case 1:
-          Navigator.pushNamed(context, '/programs');
-          break;
-
-        case 2:
-          // Already on Profile
-          break;
-      }
-    },
-  ),
-);
-    
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 2,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushReplacementNamed(context, '/admin-home');
+          } else if (index == 1) {
+            Navigator.pushReplacementNamed(context, '/admin-management');
+          } else if (index == 2) {
+            // Already on profile
+          }
+        },
+      ),
+    );
   }
 
   Widget _buildStatItem(String value, String label, Color color) {
@@ -514,7 +520,8 @@ bottomNavigationBar: BottomNavBar(
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              // Add logout logic here
+              // Add logout logic here - clear auth and navigate to login
+              Navigator.pushReplacementNamed(context, '/login');
             },
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Logout'),

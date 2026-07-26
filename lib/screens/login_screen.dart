@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isLearner = true;
   bool obscurePassword = true;
+  bool isLoading = false;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -21,11 +23,51 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void login() {
-    if (isLearner) {
-      Navigator.pushReplacementNamed(context, "/home");
-    } else {
-      Navigator.pushReplacementNamed(context, "/admin-management");
+  Future<void> login() async {
+    // Validate inputs
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter both email and password'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      // Simulate login delay
+      await Future.delayed(const Duration(seconds: 1));
+
+      // Save user role based on selection
+      final role = isLearner ? 'learner' : 'admin';
+      final userName = emailController.text.split('@').first;
+
+      await AuthService.saveUserRole(role);
+      await AuthService.saveUserName(userName);
+      await AuthService.saveUserEmail(emailController.text);
+
+      // Navigate based on role
+      if (role == 'admin') {
+        Navigator.pushReplacementNamed(context, '/admin-home');
+      } else {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login failed: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -33,40 +75,28 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FD),
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30),
-
           child: Column(
             children: [
-
               const SizedBox(height: 40),
 
               // LOGO
-              Image.asset(
-                "assets/images/excelerate_logo.png",
-                height: 120,
-              ),
+              Image.asset("assets/images/excelerate_logo.png", height: 120),
 
               const SizedBox(height: 15),
 
               const Text(
                 "Welcome",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
 
               const SizedBox(height: 8),
 
               Text(
                 "Learn • Grow • Succeed",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey.shade600,
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
               ),
 
               const SizedBox(height: 35),
@@ -77,10 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(30),
                 ),
-
                 child: Row(
                   children: [
-
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -88,32 +116,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             isLearner = true;
                           });
                         },
-
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
-
                           decoration: BoxDecoration(
-                            color: isLearner
-                                ? Colors.red
-                                : Colors.transparent,
-
+                            color: isLearner ? Colors.red : Colors.transparent,
                             borderRadius: BorderRadius.circular(30),
                           ),
-
                           child: Text(
                             "Learner",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: isLearner
-                                  ? Colors.white
-                                  : Colors.black,
+                              color: isLearner ? Colors.white : Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
                     ),
-
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
@@ -121,25 +140,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             isLearner = false;
                           });
                         },
-
                         child: Container(
                           padding: const EdgeInsets.symmetric(vertical: 14),
-
                           decoration: BoxDecoration(
-                            color: !isLearner
-                                ? Colors.red
-                                : Colors.transparent,
-
+                            color: !isLearner ? Colors.red : Colors.transparent,
                             borderRadius: BorderRadius.circular(30),
                           ),
-
                           child: Text(
                             "Admin",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: !isLearner
-                                  ? Colors.white
-                                  : Colors.black,
+                              color: !isLearner ? Colors.white : Colors.black,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -154,15 +165,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
               TextField(
                 controller: emailController,
-
                 decoration: InputDecoration(
                   hintText: "Email",
-
                   prefixIcon: const Icon(Icons.email),
-
                   filled: true,
                   fillColor: Colors.white,
-
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide.none,
@@ -175,17 +182,12 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: passwordController,
                 obscureText: obscurePassword,
-
                 decoration: InputDecoration(
                   hintText: "Password",
-
                   prefixIcon: const Icon(Icons.lock),
-
                   suffixIcon: IconButton(
                     icon: Icon(
-                      obscurePassword
-                          ? Icons.visibility_off
-                          : Icons.visibility,
+                      obscurePassword ? Icons.visibility_off : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {
@@ -193,10 +195,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                     },
                   ),
-
                   filled: true,
                   fillColor: Colors.white,
-
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide.none,
@@ -209,11 +209,15 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
-
-                  child: const Text(
-                    "Forgot Password?",
-                  ),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Password reset feature coming soon!'),
+                        backgroundColor: Colors.blue,
+                      ),
+                    );
+                  },
+                  child: const Text("Forgot Password?"),
                 ),
               ),
 
@@ -221,34 +225,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
               SizedBox(
                 width: double.infinity,
-
                 child: ElevatedButton(
-                  onPressed: login,
-
+                  onPressed: isLoading ? null : login,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.white,
                     elevation: 0,
-
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                    ),
-
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-
-                  child: Text(
-                    isLearner
-                        ? "Login as Learner"
-                        : "Login as Admin",
-
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: isLoading
+                      ? const SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Text(
+                          isLearner ? "Login as Learner" : "Login as Admin",
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
 
@@ -257,24 +260,13 @@ class _LoginScreenState extends State<LoginScreen> {
               if (isLearner)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-
                   children: [
-
-                    const Text(
-                      "Don't have an account?",
-                    ),
-
+                    const Text("Don't have an account?"),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          "/signup",
-                        );
+                        Navigator.pushNamed(context, "/signup");
                       },
-
-                      child: const Text(
-                        "Sign Up",
-                      ),
+                      child: const Text("Sign Up"),
                     ),
                   ],
                 ),
@@ -283,9 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Text(
                   "Administrator accounts are created by Excelerate.",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(color: Colors.grey),
                 ),
 
               const SizedBox(height: 30),

@@ -1,365 +1,392 @@
 import 'package:flutter/material.dart';
+
 import '../../widgets/bottom_nav_bar.dart';
+
 class LearnerProfileScreen extends StatelessWidget {
   const LearnerProfileScreen({super.key});
+
+  Future<void> _logout(BuildContext context) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Log Out"),
+        content: const Text(
+          "Are you sure you want to log out?",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text("Cancel"),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text("Log Out"),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+
+      if (context.mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/login",
+          (route) => false,
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.grey.shade100,
+
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Profile',
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.w600,
-            fontSize: 20,
-          ),
-        ),
+        title: const Text("Profile"),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.black87),
-        actions: [
-          IconButton(icon: const Icon(Icons.more_horiz), onPressed: () {}),
-        ],
       ),
+
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Profile Header
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
+            const SizedBox(height: 10),
+
+            const CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.red,
+              child: Icon(
+                Icons.person,
+                size: 60,
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  // Avatar
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.15),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'U',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  // User Info
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'User',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          'user@email.com',
-                          style: TextStyle(fontSize: 14, color: Colors.grey),
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 3,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[50],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            'Learner',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.blue[700],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Edit Icon
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.edit_outlined,
-                      size: 20,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
               ),
             ),
-            const SizedBox(height: 20),
 
-            // Personal Information Section
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
+            const SizedBox(height: 15),
+
+            const Text(
+              "Excelerate Learner",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 6),
+
+            Text(
+              "learner@excelerate.co.za",
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey.shade700,
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Personal Information',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
+                  ListTile(
+                    leading: const Icon(
+                      Icons.person_outline,
+                      color: Colors.red,
+                    ),
+                    title: const Text("Full Name"),
+                    subtitle: const Text("Excelerate Learner"),
+                  ),
+
+                  const Divider(height: 1),
+
+                  ListTile(
+                    leading: const Icon(
+                      Icons.email_outlined,
+                      color: Colors.red,
+                    ),
+                    title: const Text("Email"),
+                    subtitle: const Text(
+                      "learner@excelerate.co.za",
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  _buildInfoRow('Name', 'User'),
-                  const Divider(height: 1),
-                  _buildInfoRow('Email', 'user@email.com'),
-                  const Divider(height: 1),
-                  _buildInfoRow('University', 'University Name'),
-                  const Divider(height: 1),
-                  _buildInfoRow('Role', 'Learner'),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
 
-            // Settings Section
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
+                  const Divider(height: 1),
+
+                  ListTile(
+                    leading: const Icon(
+                      Icons.phone_outlined,
+                      color: Colors.red,
                     ),
+                    title: const Text("Phone"),
+                    subtitle: const Text("+27 12 345 6789"),
                   ),
-                  _buildSettingsItem(
-                    icon: Icons.notifications_outlined,
-                    title: 'Notifications',
-                    onTap: () {},
-                  ),
-                  _buildSettingsItem(
-                    icon: Icons.help_outline,
-                    title: 'Help & Support',
-                    onTap: () {},
-                  ),
-                  _buildSettingsItem(
-                    icon: Icons.privacy_tip_outlined,
-                    title: 'Privacy Policy',
-                    onTap: () {},
-                  ),
-                  _buildSettingsItem(
-                    icon: Icons.settings_outlined,
-                    title: 'Account Settings',
-                    onTap: () {},
-                  ),
-                ],
+
+                                  ],
               ),
             ),
+
             const SizedBox(height: 20),
 
-            // Logout Button
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              
+            ),
+
+Card(
+  elevation: 2,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(15),
+  ),
+  child: Column(
+    children: [
+      ListTile(
+        leading: const Icon(
+          Icons.person_outline,
+          color: Colors.red,
+        ),
+        title: const Text("Edit Profile"),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {
+  final nameController = TextEditingController(
+    text: "Excelerate Learner",
+  );
+
+  final emailController = TextEditingController(
+    text: "learner@excelerate.co.za",
+  );
+
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text("Edit Profile"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              labelText: "Full Name",
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: emailController,
+            decoration: const InputDecoration(
+              labelText: "Email",
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text("Cancel"),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Profile updated successfully."),
+              ),
+            );
+          },
+          child: const Text("Save"),
+        ),
+      ],
+    ),
+  );
+},
+      ),
+
+      const Divider(height: 1),
+
+      ListTile(
+        leading: const Icon(
+          Icons.notifications_outlined,
+          color: Colors.red,
+        ),
+        title: const Text("Notifications"),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {
+          Navigator.pushNamed(context, "/alerts");
+        },
+      ),
+
+      const Divider(height: 1),
+
+      
+      ListTile(
+        leading: const Icon(
+          Icons.settings_outlined,
+          color: Colors.red,
+        ),
+        title: const Text("Settings"),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text("Settings"),
+      content: const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: Icon(Icons.palette),
+            title: Text("Theme"),
+            subtitle: Text("Light"),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.language),
+            title: Text("Language"),
+            subtitle: Text("English"),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.info_outline),
+            title: Text("App Version"),
+            subtitle: Text("v1.0.0"),
+          ),
+        ],
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: Navigator.of(context).pop,
+          child: const Text("Close"),
+        ),
+      ],
+    ),
+  );
+},
+      ),
+
+      const Divider(height: 1),
+
+      ListTile(
+        leading: const Icon(
+          Icons.help_outline,
+          color: Colors.red,
+        ),
+        title: const Text("Help & Support"),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text("Contact Support"),
+      content: const Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Need assistance?",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 15),
+          Text("📧 support@excelerate.co.za"),
+          SizedBox(height: 8),
+          Text("📞 +27 12 345 6789"),
+          SizedBox(height: 8),
+          Text("🕒 Monday - Friday\n08:00 - 17:00"),
+        ],
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: Navigator.of(context).pop,
+          child: const Text("Close"),
+        ),
+      ],
+    ),
+  );
+},
+      ),
+
+      const Divider(height: 1),
+
+      ListTile(
+        leading: const Icon(
+          Icons.info_outline,
+          color: Colors.red,
+        ),
+        title: const Text("About Excelerate"),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {
+          Navigator.pushNamed(context, "/aboutUs");
+        },
+      ),
+    ],
+  ),
+),
+
+
+            const SizedBox(height: 30),
+
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _showLogoutDialog(context);
-                },
+              child: ElevatedButton.icon(
+                onPressed: () => _logout(context),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 15,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  elevation: 0,
                 ),
-                child: const Text(
-                  'Logout',
+                icon: const Icon(Icons.logout),
+                label: const Text(
+                  "Log Out",
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
-    bottomNavigationBar: BottomNavBar(
-      currentIndex: 2,
-      onTap: (index) {
-        switch (index) {
-          case 0:
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (route) => false,
-            );
-            break;
 
-          case 1:
-            Navigator.pushNamed(context, '/programs');
-            break;
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: 2,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(
+                context,
+                "/home",
+              );
+              break;
 
-          case 2:
-            // Already on Learner Profile
-            break;
-        }
-      },
-      ),
-    );
-    
-  }
+            case 1:
+              Navigator.pushReplacementNamed(
+                context,
+                "/programs",
+              );
+              break;
 
-  Widget _buildInfoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
-            ),
-          ),
-        ],
+            case 2:
+              break;
+          }
+        },
       ),
     );
   }
-
-  Widget _buildSettingsItem({
-    required IconData icon,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
-          children: [
-            Icon(icon, size: 22, color: Colors.grey[700]),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
-                ),
-              ),
-            ),
-            Icon(Icons.chevron_right, color: Colors.grey[400], size: 22),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel', style: TextStyle(color: Colors.grey[600])),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              // Add logout logic here
-            },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
-    
-  }
-  
 }

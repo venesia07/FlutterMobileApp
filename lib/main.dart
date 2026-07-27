@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 
+// Admin screens
+import 'screens/admin_home_screen.dart';
+import 'screens/program_management_screen.dart';
+import 'screens/profile/admin_profile_screen.dart';
+
+// Learner screens
 import 'screens/home_screen.dart';
 import 'screens/program_list_screen.dart';
 import 'screens/program_details_screen.dart';
 import 'screens/application_screen.dart';
 import 'screens/leave_review_screen.dart';
-import 'screens/profile/admin_profile_screen.dart';
 import 'screens/profile/learner_profile_screen.dart';
+
+// Auth screens
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/splash_screen.dart';
-import 'screens/admin_home_screen.dart';
-import 'screens/program_management_screen.dart';
+
+// Additional screens
+import 'screens/about_us_screen.dart';
+import 'screens/alerts_screen.dart';
 
 //import 'theme/app_theme.dart';
 
@@ -33,18 +42,27 @@ class ExcelerateApp extends StatelessWidget {
       initialRoute: '/splash',
 
       routes: {
+        // Auth routes
         '/': (context) => const SplashScreen(),
         '/splash': (context) => const SplashScreen(),
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignupScreen(),
+
+        // Learner routes
         '/home': (context) => const HomeScreen(),
         '/programs': (context) => const ProgramListScreen(),
-        '/admin-management': (context) => const ProgramManagementScreen(),
-        '/admin-home': (context) => const AdminHomeScreen(),
-        '/adminProfile': (context) => const AdminProfileScreen(),
         '/application': (context) => const ApplicationScreen(),
         '/leaveReview': (context) => const ReviewScreen(),
         '/learnerProfile': (context) => const LearnerProfileScreen(),
+
+        // Admin routes
+        '/admin-home': (context) => const AdminHomeScreen(),
+        '/admin-management': (context) => const ProgramManagementScreen(),
+        '/adminProfile': (context) => const AdminProfileScreen(),
+
+        // Additional screens
+        '/aboutUs': (context) => const AboutUsScreen(),
+        '/alerts': (context) => const AlertsScreen(),
       },
     );
   }

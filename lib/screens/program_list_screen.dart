@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/program.dart';
 import '../screens/program_details_screen.dart';
 import '../widgets/bottom_nav_bar.dart';
+import '../services/program_service.dart';
 
 class ProgramListScreen extends StatefulWidget {
   const ProgramListScreen({super.key});
@@ -12,53 +13,35 @@ class ProgramListScreen extends StatefulWidget {
 
 class _ProgramListScreenState extends State<ProgramListScreen> {
   // Sample programs
-  final List<Program> programs = [
-    Program(
-      title: "Mobile App Development",
-      startDate: "20 July 2026",
-      endDate: "20 August 2026",
-      location: "Remote",
-      description:
-          "Learn Flutter while building real-world mobile applications.",
-      requirements: [
-        "Basic programming",
-        "Laptop",
-        "Internet connection",
-      ],
-      skills: [
-        "Flutter",
-        "Dart",
-        "Git",
-      ],
-      image: "assets/images/mobile_app_dev_image.jpg",
-    ),
-    Program(
-      title: "Data Analytics",
-      startDate: "01 May 2027",
-      endDate: "01 June 2027",
-      location: "Hybrid",
-      description: "Learn SQL, Power BI and Python.",
-      requirements: [
-        "Analytical thinking",
-        "Laptop",
-      ],
-      skills: [
-        "SQL",
-        "Power BI",
-        "Python",
-      ],
-      image: "assets/images/data_analytics_image.jpg",
-    ),
-  ];
+  final ProgramService _programService = ProgramService();
 
+  List<Program> programs = [];
   List<Program> filteredPrograms = [];
+
+  bool isLoading = true;
+  String? errorMessage;
 
   @override
   void initState() {
     super.initState();
-    filteredPrograms = programs;
+    loadPrograms();
   }
 
+Future<void> loadPrograms() async {
+  try {
+    programs = await _programService.loadPrograms();
+
+    setState(() {
+      filteredPrograms = programs;
+      isLoading = false;
+    });
+  } catch (e) {
+    setState(() {
+      errorMessage = "Unable to load programs.";
+      isLoading = false;
+    });
+  }
+}
   void searchProgram(String query) {
     setState(() {
       filteredPrograms = programs.where((program) {
@@ -84,7 +67,16 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
         
       ),
 
-      body: Column(
+      body : isLoading
+    ? const Center(
+        child: CircularProgressIndicator(),
+      )
+    : errorMessage != null
+        ? Center(
+            child: Text(errorMessage!),
+          )
+      
+      : Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -228,6 +220,18 @@ class _ProgramListScreenState extends State<ProgramListScreen> {
                                   ],
                                 ),
 
+                              const SizedBox(height: 5),
+
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.computer,
+                                      size: 16,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(program.deliveryMethod),
+                                  ],
+                                ),
                                 const SizedBox(height: 5),
 
                                 Row(

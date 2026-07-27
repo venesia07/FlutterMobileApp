@@ -2,31 +2,67 @@
   {
     "id": 1,
     "title": "Mobile App Development",
-    "description": "Learn Flutter and Dart while building cross-platform mobile applications.",
-    "location": "Remote",
-    "category": "Technology",
     "startDate": "2026-08-01",
     "endDate": "2026-09-30",
+    "deliveryMethod": "Remote",
+    "location": "N/A",
+    "category": "Technology",
+    "description": "Learn Flutter and Dart while building cross-platform applications.",
+    "requirements": [
+      "Basic programming knowledge",
+      "Laptop",
+      "Reliable internet connection"
+    ],
+    "skills": [
+      "Flutter",
+      "Dart",
+      "Git",
+      "UI Design"
+    ],
     "image": "assets/images/mobile_app_dev_image.jpg"
   },
   {
     "id": 2,
     "title": "Cyber Security",
-    "description": "Develop practical cyber security skills through hands-on learning.",
-    "location": "Johannesburg",
-    "category": "Technology",
     "startDate": "2026-09-10",
     "endDate": "2026-11-10",
-    "image": "assets/images/cyber_security.jpg"
+    "deliveryMethod": "In-Person",
+    "location": "Johannesburg",
+    "category": "Technology",
+    "description": "Develop practical cyber security skills through hands-on learning.",
+    "requirements": [
+      "Basic computer knowledge",
+      "Interest in cyber security",
+      "Laptop"
+    ],
+    "skills": [
+      "Networking",
+      "Linux",
+      "Security",
+      "Problem Solving"
+    ],
+    "image": "assets/images/cyber_security_image.jpg"
   },
   {
     "id": 3,
     "title": "Data Science",
-    "description": "Learn data analysis, machine learning and visualization.",
-    "location": "Cape Town",
-    "category": "Data",
     "startDate": "2026-10-01",
     "endDate": "2026-12-15",
+    "deliveryMethod": "Hybrid",
+    "location": "Cape Town",
+    "category": "Data",
+    "description": "Learn data analysis, machine learning and visualization.",
+    "requirements": [
+      "Basic mathematics",
+      "Laptop",
+      "Interest in data analysis"
+    ],
+    "skills": [
+      "Python",
+      "SQL",
+      "Machine Learning",
+      "Data Visualization"
+    ],
     "image": "assets/images/data_science_image.jpg"
   }
 ]

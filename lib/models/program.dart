@@ -1,69 +1,79 @@
 class Program {
+  final int id;
   final String title;
   final String startDate;
   final String endDate;
+  final String deliveryMethod;
   final String location;
+  final String category;
   final String description;
   final List<String> requirements;
   final List<String> skills;
   final String image;
 
   Program({
+    required this.id,
     required this.title,
     required this.startDate,
     required this.endDate,
+    required this.deliveryMethod,
     required this.location,
+    required this.category,
     required this.description,
     required this.requirements,
     required this.skills,
     required this.image,
   });
 
-  // Factory method to create Program from JSON
-  factory Program.fromJson(Map<String, dynamic> json) {
-    // Get category if it exists (since your JSON uses 'category' instead of 'skills')
-    String? category = json['category'] as String?;
+// Factory method to create Program from JSON
+factory Program.fromJson(Map<String, dynamic> json) {
+  String? category = json['category'] as String?;
 
-    // If skills is empty but category exists, use category
-    List<String> skillsList = [];
-    if (json['skills'] != null) {
-      if (json['skills'] is String) {
-        skillsList = [json['skills']];
-      } else if (json['skills'] is List) {
-        skillsList = List<String>.from(json['skills']);
-      }
-    } else if (category != null && category.isNotEmpty) {
-      skillsList = [category];
+  List<String> skillsList = [];
+  if (json['skills'] != null) {
+    if (json['skills'] is String) {
+      skillsList = [json['skills']];
+    } else if (json['skills'] is List) {
+      skillsList = List<String>.from(json['skills']);
     }
-
-    return Program(
-      title: json['title']?.toString() ?? 'Untitled',
-      startDate: json['startDate']?.toString() ?? 'TBD',
-      endDate: json['endDate']?.toString() ?? 'TBD',
-      location: json['location']?.toString() ?? 'Unknown',
-      description:
-          json['description']?.toString() ?? 'No description available',
-      requirements: json['requirements'] != null
-          ? (json['requirements'] is String
-                ? [json['requirements']]
-                : List<String>.from(json['requirements']))
-          : [],
-      skills: skillsList,
-      image: json['image']?.toString() ?? '',
-    );
+  } else if (category != null && category.isNotEmpty) {
+    skillsList = [category];
   }
 
-  // Convert Program to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'startDate': startDate,
-      'endDate': endDate,
-      'location': location,
-      'description': description,
-      'requirements': requirements,
-      'skills': skills,
-      'image': image,
-    };
-  }
+  return Program(
+    id: json['id'] ?? 0,
+    title: json['title']?.toString() ?? 'Untitled',
+    startDate: json['startDate']?.toString() ?? 'TBD',
+    endDate: json['endDate']?.toString() ?? 'TBD',
+    deliveryMethod: json['deliveryMethod']?.toString() ?? 'Unknown',
+    location: json['location']?.toString() ?? 'Unknown',
+    category: category ?? '',
+    description:
+        json['description']?.toString() ?? 'No description available',
+    requirements: json['requirements'] != null
+        ? (json['requirements'] is String
+            ? [json['requirements']]
+            : List<String>.from(json['requirements']))
+        : [],
+    skills: skillsList,
+    image: json['image']?.toString() ?? '',
+  );
+}
+
+// Convert Program to JSON
+Map<String, dynamic> toJson() {
+  return {
+    'id': id,
+    'title': title,
+    'startDate': startDate,
+    'endDate': endDate,
+    'deliveryMethod': deliveryMethod,
+    'location': location,
+    'category': category,
+    'description': description,
+    'requirements': requirements,
+    'skills': skills,
+    'image': image,
+  };
+}
 }

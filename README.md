@@ -137,3 +137,23 @@ Current Progress:
 - Updated project documentation.
 
 Screenshots:
+
+
+## Week 3 Updates
+
+### Features Implemented
+- Program Listing now loads data from local JSON.
+- Program Details displays dynamic JSON data.
+- Login form includes input validation.
+- Application form includes validation.
+- Loading indicators were added while fetching data.
+- Error handling was implemented for failed data loading.
+- Search and filtering functionality was added for programs.
+
+### Documentation
+- Week 3 documentation created.
+- Updated project README.
+- UI testing completed for the integrated application.
+
+### Current Status
+The application now supports dynamic content using JSON, improved form validation, loading states, and error handling. These enhancements make the application more interactive and closer to production-ready.

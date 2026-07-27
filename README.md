@@ -136,4 +136,15 @@ Current Progress:
 - Maintained consistent UI design.
 - Updated project documentation.
 
-Screenshots:
+
+Week 3 – Application Functionality and Data Integration
+
+Current Progress:
+- Connected Program Listing and Program Details screens with sample JSON/mock API data.
+- Implemented dynamic data display using Flutter models.
+- Added form functionality with validation.
+- Improved user interaction and screen functionality.
+- Implemented reusable Bottom Navigation Bar widget.
+- Tested navigation flow and application features.
+- Updated documentation and project structure.
+

@@ -40,4 +40,4 @@ class ExcelerateApp extends StatelessWidget {
       },
     );
   }
-}
+}

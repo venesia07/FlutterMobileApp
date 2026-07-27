@@ -220,6 +220,18 @@ Future<void> loadPrograms() async {
                                   ],
                                 ),
 
+                              const SizedBox(height: 5),
+
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.computer,
+                                      size: 16,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(program.deliveryMethod),
+                                  ],
+                                ),
                                 const SizedBox(height: 5),
 
                                 Row(

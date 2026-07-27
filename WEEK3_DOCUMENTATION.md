@@ -96,7 +96,12 @@ The following were successfully tested:
 - Navigation to Application screen
 - Navigation to Review screen
 - Navigation to Profile screen
-
+- Application form required-field validation
+- Application email format validation
+- Successful Application form submission and confirmation
+- Leave Review star rating validation
+- Leave Review required-field validation
+- Successful Review submission and confirmation
 Some screens and features are still under development by other team members and will continue to be updated as integration progresses.
 
 ## Summary
@@ -104,3 +109,4 @@ Some screens and features are still under development by other team members and 
 Week 3 development has introduced dynamic JSON-based program data, form validation, loading states, error handling, search functionality, and improved application interactivity.
 
 The implemented features were reviewed and tested on the current integrated build. Documentation will be updated as additional Week 3 features are completed and integrated.
+The implemented features were reviewed and tested on the current integrated build. UI navigation, program data display, search and filtering, form validation, and successful Application and Review submission flows were verified during testing. Documentation reflects the Week 3 features currently integrated and tested.

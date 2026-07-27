@@ -134,6 +134,24 @@ class _SignupScreenState extends State<SignupScreen> {
                       return "Password must be at least 6 characters";
                     }
 
+                    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                      return "Password must contain an uppercase letter";
+                    }
+
+                    if (!RegExp(r'[a-z]').hasMatch(value)) {
+                      return "Password must contain a lowercase letter";
+                    }
+
+                    if (!RegExp(r'[0-9]').hasMatch(value)) {
+                      return "Password must contain a number";
+                    }
+
+                    if (!RegExp(
+                      r'[!@#$%^&*(),.?":{}|<>_\-\\/\[\]+=;]',
+                    ).hasMatch(value)) {
+                      return "Password must contain a special character";
+                    }
+
                     return null;
                   },
 

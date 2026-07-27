@@ -49,7 +49,41 @@ class ProgramDetailsScreen extends StatelessWidget {
               ),
             ),
 
+            //Program Category
+            const SizedBox(height: 10),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.red.shade100,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                program.category,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
             const SizedBox(height: 15),
+
+            // Delivery method
+            Row(
+              children: [
+                const Icon(
+                  Icons.computer,
+                  color: Colors.red,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  program.deliveryMethod,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
 
             // Location
             Row(
@@ -177,7 +211,7 @@ class ProgramDetailsScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ApplicationScreen(),
+          builder: (context) => ApplicationScreen(program: program,),
         ),
       );
     },
@@ -210,7 +244,7 @@ SizedBox(
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ReviewScreen(),
+          builder: (context) => ReviewScreen(program: program, ),
         ),
       );
     },

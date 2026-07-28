@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/program.dart';
+import '../services/alert_service.dart';
+import '../services/review_service.dart';
 
 class ReviewScreen extends StatefulWidget {
   final Program program;
@@ -371,6 +373,19 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     }
 
                     if (_formKey.currentState!.validate()) {
+
+                      ReviewService.instance.addReview(
+                        program: widget.program,
+                        review: _reviewController.text,
+                        rating: rating.toDouble(),
+                      );
+
+                      AlertService.instance.addAlert(
+                          title: "Review Submitted",
+                          message:
+                              "Your review for ${widget.program.title} has been submitted.",
+                        );
+
                       showDialog(
                         context: context,
                         barrierDismissible: false,

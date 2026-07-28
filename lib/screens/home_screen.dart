@@ -3,6 +3,7 @@ import '../models/program.dart';
 import '../screens/program_details_screen.dart';
 import '../services/program_service.dart';
 import '../widgets/bottom_nav_bar.dart';
+import '../services/alert_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -373,7 +374,46 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icons[i], color: Colors.red.shade700),
+              i == 3
+    ? Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Icon(
+            icons[i],
+            color: Colors.red.shade700,
+          ),
+
+          if (AlertService.instance.unreadCount > 0)
+            Positioned(
+              right: -2,
+              top: -2,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
+                constraints: const BoxConstraints(
+                  minWidth: 18,
+                  minHeight: 18,
+                ),
+                child: Text(
+                  AlertService.instance.unreadCount.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      )
+    : Icon(
+        icons[i],
+        color: Colors.red.shade700,
+      ),
               const SizedBox(height: 6),
               Text(labels[i], style: const TextStyle(fontSize: 11)),
             ],

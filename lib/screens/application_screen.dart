@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/program.dart';
+import '../services/alert_service.dart';
+import '../services/application_service.dart';
 
 class ApplicationScreen extends StatefulWidget {
   final Program program;
@@ -34,6 +36,14 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
 
   if (_formKey.currentState!.validate()) {
 
+    ApplicationService.instance.applyForProgram(
+      widget.program,
+    );
+    
+    AlertService.instance.addAlert(
+      title: "Application Submitted",
+      message: "You successfully applied for ${widget.program.title}.",
+    );
     showDialog(
 
       context: context,

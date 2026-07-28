@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../services/alert_service.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -59,6 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (!mounted) return;
 
+    // Add a login notification
+    AlertService.instance.addAlert(
+      title: "Welcome Back!",
+      message: "You have successfully logged in.",
+    );
+    
     // Navigate based on the user's role
     if (role == 'learner') {
       Navigator.pushReplacementNamed(context, "/home");

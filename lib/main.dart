@@ -10,6 +10,9 @@ import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/program_management_screen.dart';
+import 'screens/saved_programs_screen.dart';
+import 'screens/my_applications_screen.dart';
+import 'screens/my_reviews_screen.dart';
 
 void main() {
   runApp(const ExcelerateApp());
@@ -37,6 +40,9 @@ class ExcelerateApp extends StatelessWidget {
         '/adminProfile': (context) => const AdminProfileScreen(),
         '/aboutUs': (context) => const AboutUsScreen(),
         '/alerts': (context) => const AlertsScreen(),
+        '/savedPrograms': (context) => const SavedProgramsScreen(),
+         '/myApplications': (context) => const MyApplicationsScreen(),
+         '/myReviews': (context) => const MyReviewsScreen(),
       },
     );
   }

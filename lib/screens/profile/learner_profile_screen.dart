@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/bottom_nav_bar.dart';
 
+import '../../services/saved_program_service.dart';
+
+import '../../services/application_service.dart';
+
+import '../../services/review_service.dart';
+import '../../services/alert_service.dart';
+
 class LearnerProfileScreen extends StatelessWidget {
   const LearnerProfileScreen({super.key});
 
@@ -137,12 +144,80 @@ class LearnerProfileScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              
-            ),
+  elevation: 2,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(15),
+  ),
+  child: Padding(
+    padding: const EdgeInsets.all(16),
+    child: Row(
+      children: [
+
+        Expanded(
+          child: _buildStatTile(
+            context,
+            "Applications",
+            ApplicationService.instance
+            .applications
+            .length
+            .toString(),
+            Icons.work_outline,
+            Colors.blue,
+            () {
+              Navigator.pushNamed(
+                context,
+                "/myApplications",
+              );
+            },
+          ),
+        ),
+
+        const SizedBox(width: 10),
+
+        Expanded(
+          child: _buildStatTile(
+            context,
+            "Saved",
+            SavedProgramService.instance
+                .savedPrograms
+                .length
+                .toString(),
+            Icons.favorite,
+            Colors.red,
+            () {
+              Navigator.pushNamed(
+                context,
+                "/savedPrograms",
+              );
+            },
+          ),
+        ),
+
+        const SizedBox(width: 10),
+
+        Expanded(
+          child: _buildStatTile(
+            context,
+            "Reviews",
+            ReviewService.instance
+            .reviews
+            .length
+            .toString(), // Will become dynamic later
+            Icons.star,
+            Colors.orange,
+            () {
+              Navigator.pushNamed(
+                context,
+                "/myReviews",
+              );
+            },
+          ),
+        ),
+
+      ],
+    ),
+  ),
+),
 
 Card(
   elevation: 2,
@@ -215,10 +290,41 @@ Card(
       const Divider(height: 1),
 
       ListTile(
-        leading: const Icon(
-          Icons.notifications_outlined,
-          color: Colors.red,
+       leading: Stack(
+  clipBehavior: Clip.none,
+  children: [
+    const Icon(
+      Icons.notifications_outlined,
+      color: Colors.red,
+    ),
+
+    if (AlertService.instance.unreadCount > 0)
+      Positioned(
+        right: -6,
+        top: -6,
+        child: Container(
+          padding: const EdgeInsets.all(4),
+          decoration: const BoxDecoration(
+            color: Colors.red,
+            shape: BoxShape.circle,
+          ),
+          constraints: const BoxConstraints(
+            minWidth: 18,
+            minHeight: 18,
+          ),
+          child: Text(
+            AlertService.instance.unreadCount.toString(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
+      ),
+  ],
+),
         title: const Text("Notifications"),
         trailing: const Icon(Icons.chevron_right),
         onTap: () {
@@ -364,6 +470,8 @@ Card(
         ),
       ),
 
+
+
       bottomNavigationBar: BottomNavBar(
         currentIndex: 2,
         onTap: (index) {
@@ -389,4 +497,49 @@ Card(
       ),
     );
   }
+
+  Widget _buildStatTile(
+  BuildContext context,
+  String title,
+  String value,
+  IconData icon,
+  Color color,
+  VoidCallback onTap,
+) {
+  return InkWell(
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(12),
+    child: Column(
+      children: [
+
+        Icon(
+          icon,
+          color: color,
+          size: 30,
+        ),
+
+        const SizedBox(height: 8),
+
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        const SizedBox(height: 4),
+
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 13,
+          ),
+        ),
+
+      ],
+    ),
+  );
+}
 }

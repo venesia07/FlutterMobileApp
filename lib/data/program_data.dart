@@ -1,4 +1,4 @@
-import '../models/program.dart';
+/*import '../models/program.dart';
 
 final List<Program> programs = [
   Program(
@@ -44,4 +44,4 @@ final List<Program> programs = [
     ],
     image: "assets/images/data_analytics_image.jpg",
   ),
-];
+];*/

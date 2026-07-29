@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final List<dynamic> users = jsonDecode(response);
 
     // Get entered credentials
-    final String email = emailController.text.trim();
+    final String email = emailController.text.trim().toLowerCase();
     final String password = passwordController.text;
 
     // Find a user with matching email and password
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                final email = forgotEmailController.text.trim();
+                final email = forgotEmailController.text.trim().toLowerCase();
 
                 if (email.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(

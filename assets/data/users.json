@@ -5,12 +5,6 @@
     "email": "learner@excelerate.com",
     "password": "Password@123",
     "role": "learner"
-  },
-  {
-    "id": 2,
-    "name": "Admin User",
-    "email": "admin@excelerate.com",
-    "password": "Admin@123",
-    "role": "admin"
   }
+  
 ]

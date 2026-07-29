@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -27,6 +30,62 @@ class _SignupScreenState extends State<SignupScreen> {
     passwordController.dispose();
     confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  Future<void> signup() async {
+    // Load users.json
+    final String response = await rootBundle.loadString(
+      'assets/data/users.json',
+    );
+
+    // Convert JSON data into a Dart list
+    final List<dynamic> users = jsonDecode(response);
+
+    // Get entered email
+    final String email = emailController.text.trim().toLowerCase();
+
+    // Check if email already exists
+    final bool emailExists = users.any(
+      (user) => user['email'].toString().trim().toLowerCase() == email,
+    );
+
+    if (!mounted) return;
+
+    // If email already exists, show account exists dialog
+    if (emailExists) {
+      showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            title: const Text("Account Already Exists"),
+            content: const Text(
+              "An account with this email already exists. "
+              "Would you like to sign in instead?",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                },
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(dialogContext);
+                  Navigator.pop(context);
+                },
+                child: const Text("Sign In"),
+              ),
+            ],
+          );
+        },
+      );
+
+      return;
+    }
+
+    // Email does not exist, so continue with signup
+    Navigator.pushReplacementNamed(context, "/home");
   }
 
   @override
@@ -217,7 +276,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.pushReplacementNamed(context, "/home");
+                        signup();
                       }
                     },
 

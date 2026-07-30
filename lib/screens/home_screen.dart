@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/program.dart';
 import '../screens/program_details_screen.dart';
-import '../screens/program_list_screen.dart';
+import '../services/program_service.dart';
 import '../widgets/bottom_nav_bar.dart';
+import '../services/alert_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,67 +13,93 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Program> programs = [
-    Program(
-      title: "Mobile App Development",
-      startDate: "20 July 2026",
-      endDate: "20 August 2026",
-      location: "Remote",
-      description: "Learn Flutter while building real-world mobile applications.",
-      requirements: ["Basic programming", "Laptop", "Internet connection"],
-      skills: ["Flutter", "Dart", "Git"],
-      image: "assets/images/mobile_app_dev_image.jpg",
-    ),
-    Program(
-      title: "Data Analytics",
-      startDate: "01 May 2027",
-      endDate: "01 June 2027",
-      location: "Hybrid",
-      description: "Learn SQL, Power BI and Python.",
-      requirements: ["Analytical thinking", "Laptop"],
-      skills: ["SQL", "Power BI", "Python"],
-      image: "assets/images/data_analytics_image.jpg",
-    ),
-  ];
-
+  final ProgramService _programService = ProgramService();
+  List<Program> programs = [];
+  bool isLoading = true;
+  String? errorMessage;
   String selectedCategory = "All";
-  final categories = const ["All", "Flutter", "Data", "Remote", "Hybrid"];
 
-  int get remoteCount => programs.where((p) => p.location == "Remote").length;
+  @override
+  void initState() {
+    super.initState();
+    _loadPrograms();
+  }
 
-void _openList() {Navigator.pushNamed(context, '/programs');}
-void _openDetails(Program p) => Navigator.push(context, MaterialPageRoute(builder: (_) => ProgramDetailsScreen(program: p)));
-void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$label — coming soon")));
+  Future<void> _loadPrograms() async {
+    try {
+      final loadedPrograms = await _programService.loadPrograms();
+      setState(() {
+        programs = loadedPrograms;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = "Unable to load programs.";
+        isLoading = false;
+      });
+    }
+  }
+
+  List<String> get categories {
+    final methods = programs.map((p) => p.deliveryMethod).where((m) => m.isNotEmpty).toSet().toList();
+    return ["All", ...methods];
+  }
+
+  List<Program> get filteredPrograms {
+    if (selectedCategory == "All") return programs;
+    return programs.where((p) =>
+      p.deliveryMethod.toLowerCase().replaceAll('-', ' ') ==
+      selectedCategory.toLowerCase().replaceAll('-', ' ')
+    ).toList();
+  }
+
+  int get remoteCount => programs.where((p) {
+    final method = p.deliveryMethod.toLowerCase();
+    return method == "remote" || method == "online";
+  }).length;
+
+  void _openList() {
+    Navigator.pushNamed(context, '/programs');
+  }
+
+  void _openDetails(Program p) => Navigator.push(
+      context, MaterialPageRoute(builder: (_) => ProgramDetailsScreen(program: p)));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-          children: [
-            _heroBanner(),
-            const SizedBox(height: 16),
-            _searchBar(),
-            const SizedBox(height: 20),
-            _statsRow(),
-            const SizedBox(height: 20),
-            _categoryChips(),
-            const SizedBox(height: 20),
-            _sectionHeader("Featured Programs"),
-            const SizedBox(height: 10),
-            _featuredList(),
-            const SizedBox(height: 20),
-            _sectionHeader("Recommended For You"),
-            const SizedBox(height: 10),
-            _recommendedList(),
-            const SizedBox(height: 20),
-            const Text("Quick Actions", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            _quickActions(),
-          ],
-        ),
+        child: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : errorMessage != null
+                ? Center(child: Text(errorMessage!))
+                : ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                    children: [
+                      _heroBanner(),
+                      const SizedBox(height: 16),
+                      _searchBar(),
+                      const SizedBox(height: 20),
+                      _statsRow(),
+                      const SizedBox(height: 20),
+                      _categoryChips(),
+                      const SizedBox(height: 20),
+                      _sectionHeader("Featured Programs"),
+                      const SizedBox(height: 10),
+                      _featuredList(),
+                      const SizedBox(height: 20),
+                      _sectionHeader("Recommended For You"),
+                      const SizedBox(height: 10),
+                      _recommendedList(),
+                      const SizedBox(height: 20),
+                      const Text("Quick Actions",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      _quickActions(),
+                    ],
+                  ),
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: 0,
@@ -211,14 +238,18 @@ void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(Sna
   }
 
   Widget _featuredList() {
+    final list = filteredPrograms;
+    if (list.isEmpty) {
+      return const Center(child: Text("No programs found"));
+    }
     return SizedBox(
       height: 210,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: programs.length,
+        itemCount: list.length,
         separatorBuilder: (_, _) => const SizedBox(width: 12),
         itemBuilder: (BuildContext context, int i) {
-          final p = programs[i];
+          final p = list[i];
           return InkWell(
             borderRadius: BorderRadius.circular(14),
             onTap: () => _openDetails(p),
@@ -241,7 +272,7 @@ void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(Sna
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(8)),
-                          child: Text(p.location, style: const TextStyle(color: Colors.white, fontSize: 11)),
+                          child: Text(p.deliveryMethod.isNotEmpty ? p.deliveryMethod : p.location, style: const TextStyle(color: Colors.white, fontSize: 11)),
                         ),
                       ),
                     ],
@@ -273,8 +304,12 @@ void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(Sna
   }
 
   Widget _recommendedList() {
+    final list = filteredPrograms;
+    if (list.isEmpty) {
+      return const SizedBox.shrink();
+    }
     return Column(
-      children: programs.map((p) => Padding(
+      children: list.map((p) => Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: InkWell(
           borderRadius: BorderRadius.circular(14),
@@ -310,13 +345,13 @@ void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(Sna
   }
 
   Widget _quickActions() {
-    final icons = [Icons.menu_book, Icons.person, Icons.bookmark_border, Icons.notifications_none];
-    final labels = ["Programs", "Profile", "Saved", "Alerts"];
+    final icons = [Icons.menu_book, Icons.info_outline, Icons.person, Icons.notifications_none];
+    final labels = ["Programs", "About Us", "Profile", "Alerts"];
     final taps = [
       _openList,
+      () => Navigator.pushNamed(context, '/aboutUs'),
       () => Navigator.pushNamed(context, '/learnerProfile'),
-      () => _comingSoon("Saved Programs"),
-      () => _comingSoon("Notifications"),
+      () => Navigator.pushNamed(context, '/alerts'),
     ];    return GridView.builder(
       itemCount: icons.length,
       shrinkWrap: true,
@@ -339,7 +374,46 @@ void _comingSoon(String label) => ScaffoldMessenger.of(context).showSnackBar(Sna
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icons[i], color: Colors.red.shade700),
+              i == 3
+    ? Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Icon(
+            icons[i],
+            color: Colors.red.shade700,
+          ),
+
+          if (AlertService.instance.unreadCount > 0)
+            Positioned(
+              right: -2,
+              top: -2,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
+                constraints: const BoxConstraints(
+                  minWidth: 18,
+                  minHeight: 18,
+                ),
+                child: Text(
+                  AlertService.instance.unreadCount.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      )
+    : Icon(
+        icons[i],
+        color: Colors.red.shade700,
+      ),
               const SizedBox(height: 6),
               Text(labels[i], style: const TextStyle(fontSize: 11)),
             ],

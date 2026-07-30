@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'screens/about_us_screen.dart';
+import 'screens/alerts_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/program_list_screen.dart';
-import 'screens/program_details_screen.dart';
-import 'screens/application_screen.dart';
-import 'screens/leave_review_screen.dart';
-import 'screens/profile/admin_profile_screen.dart';
-import 'screens/profile/learner_profile_screen.dart';
+import 'screens/learner_profile_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/splash_screen.dart';
-import 'screens/admin_home_screen.dart';
-import 'screens/program_management_screen.dart';
-
-//import 'theme/app_theme.dart';
+import 'screens/saved_programs_screen.dart';
+import 'screens/my_applications_screen.dart';
+import 'screens/my_reviews_screen.dart';
 
 void main() {
   runApp(const ExcelerateApp());
@@ -27,9 +24,6 @@ class ExcelerateApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Excelerate App',
-      //theme: AppTheme.lightTheme,
-
-      // Use splash screen as starting point
       initialRoute: '/splash',
 
       routes: {
@@ -39,12 +33,12 @@ class ExcelerateApp extends StatelessWidget {
         '/signup': (context) => const SignupScreen(),
         '/home': (context) => const HomeScreen(),
         '/programs': (context) => const ProgramListScreen(),
-        '/admin-management': (context) => const ProgramManagementScreen(),
-        '/admin-home': (context) => const AdminHomeScreen(),
-        '/adminProfile': (context) => const AdminProfileScreen(),
-        '/application': (context) => const ApplicationScreen(),
-        '/leaveReview': (context) => const ReviewScreen(),
         '/learnerProfile': (context) => const LearnerProfileScreen(),
+        '/aboutUs': (context) => const AboutUsScreen(),
+        '/alerts': (context) => const AlertsScreen(),
+        '/savedPrograms': (context) => const SavedProgramsScreen(),
+         '/myApplications': (context) => const MyApplicationsScreen(),
+         '/myReviews': (context) => const MyReviewsScreen(),
       },
     );
   }

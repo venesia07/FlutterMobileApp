@@ -1,150 +1,268 @@
-Team 13 Mobile Application
+Excelerate Mobile Application
+Team 13 – Mobile Application Development Internship
 
-Project Overview
 
-This project is a Flutter-based mobile application developed as part of the Excelerate Mobile Application Development Internship.
-The application aims to provide users with an intuitive and user-friendly platform that reflects the services and information available on the Excelerate website, while offering the convenience of a mobile application.
+Project Overview:
+The Excelerate Mobile Application is a Flutter-based learner application developed during the Excelerate Mobile Application Development Internship. The application provides learners with an intuitive platform to browse available programmes, apply for opportunities, leave reviews, save favourite programmes, and manage their learning journey through a modern mobile experience.
+The project was developed over a four-week internship using Flutter and Dart while following industry-standard software development practices, version control workflows, and collaborative development through GitHub.
 
-Project Vision
-To develop a modern, responsive, and easy-to-use mobile application that delivers an engaging user experience while demonstrating best practices in Flutter development.
+Project Vision:
+To develop a modern, responsive, and user-friendly mobile application that enhances learner engagement while demonstrating best practices in Flutter application development.
 
-Objectives
+Objectives:
 - Develop a cross-platform mobile application using Flutter.
-- Apply industry-standard software development practices.
+- Apply professional software development practices.
 - Collaborate effectively using Git and GitHub.
-- Design a clean and intuitive user interface.
-- Build a scalable and maintainable application.
+- Build reusable and maintainable Flutter components.
+- Design a clean, accessible and intuitive user interface.
+- Implement dynamic data using local JSON.
+- Produce a portfolio-ready mobile application.
 
-Target Users
+Target Users:
 - Excelerate Learners
-- Excelerate Administrators
 
-Features Implemented (Week2)
-- Login Screen UI
-- Home Screen UI (for learners)
-- Home Screen UI (for admins)
-- Program Listing Screen UI 
-- Program Details Screen UI 
-- Leave Review Screen UI
-- Application Screen UI
-- Profile Screen UI (for learners)
-- Profile Screen UI (for admins)
-- Manage Programs Sceen UI (for admins)
+Features:
+The application currently includes the following functionality:
 
- Planned Features
-- User Authentication (Login)
-- Home Dashboard
-- Program Listings
-- Program Details
-- Program Management 
-- User Profile
-- Navigation Drawer/Bottom Navigation
-- Responsive User Interface
+Authentication
+- Login
+- Sign Up
+- Forgot Password
+- Input validation
 
-Technology Stack
+Home
+- Learner Dashboard
+- Featured Programmes
+- Quick Navigation
+- Notification Badge
+
+Programmes
+- Browse available programmes
+- Dynamic programme listing using JSON
+- Programme details
+- Programme requirements
+- Skills covered
+- Programme category
+- Delivery method
+- Programme duration
+
+Applications
+- Apply for programmes
+- Form validation
+- Application confirmation
+
+Reviews
+- Submit programme reviews
+- Star rating
+- Recommendation option
+- Review confirmation
+
+Saved Programmes
+- Save programmes
+- Remove saved programmes
+- Saved programme history
+
+Alerts
+- Login notifications
+- Application notifications
+- Review notifications
+- Save programme notifications
+- Remove programme notifications
+- Alert history
+
+Learner Profile
+- View learner information
+- Edit profile (UI)
+- Applications summary
+- Saved programmes summary
+- Reviews summary
+- Notification access
+- Settings
+- Help & Support
+- About Excelerate
+- Logout
+
+Technologies Used:
 - Flutter
 - Dart
+- JSON
 - Git
 - GitHub
 - Android Studio
 - Visual Studio Code
-- Figma (Wireframing)
+- Material Design
 
-Navigation Flow
-Learners: 
-Login
- ↓
-Home
- ↓
-Program Listing
-        ↓ (if program is selected)
-        Program Details
-              ↓ (if apply button is clicked)
-              Application Screen 
-              ↓ (if leave review button is clicked)
-              Leave Review Screen
- ↓ 
-Profile
+Project Structure:
+lib/
+│
+├── models/
+├── screens/
+├── services/
+├── widgets/
+├── assets/
+│   ├── images/
+│   └── data/
+├── main.dart
 
-Admins:
-Login
- ↓
-Home
- ↓
-Program Management
- ↓ 
-Profile
+Installation:
+1. Clone the repository:
+      git clone https://github.com/venesia07/team13-mobile-app.git
 
-
-Installation
-
-1. Clone the repository
-Command to use:
-git clone https://github.com/venesia07/team13-mobile-app.git
-
-
-2. Navigate to the project folder
-Command to use:
-cd team13_mobile_app
-
+2. Navigate to the project:
+      cd team13_mobile_app
 
 3. Install dependencies
-Command to use:
-flutter pub get
+      flutter pub get
+
 
 4. Run the application
+      flutter run
 
-Command to use: 
-flutter run
+Application Navigation:
+Login
+   │
+   ▼
+Home
+   │
+   ├──────────────► Programs
+   │                    │
+   │                    ▼
+   │             Program Details
+   │               │         │
+   │               ▼         ▼
+   │         Apply        Leave Review
+   │
+   ▼
+Profile
+   │
+   ├── Saved Programs
+   ├── Applications
+   ├── Reviews
+   ├── Alerts
+   ├── Settings
+   ├── Help & Support
+   └── About Us
 
+Screenshots:
+The following screenshots are included within the project documentation.
+- Login Screen
+- Sign Up Screen
+- Home Screen
+- Program Listing Screen
+- Program Details Screen
+- Application Screen
+- Leave Review Screen
+- Alerts Screen
+- Learner Profile Screen
+- About Us Screen
 
-Version Control
-Git and GitHub are used for version control and collaboration throughout the project.
+Key Flutter Concepts Demonstrated:
+- Stateful Widgets
+- Stateless Widgets
+- Navigation & Routing
+- Form Validation
+- JSON Data Integration
+- Local In-Memory State Management
+- Custom Services
+- Reusable Widgets
+- Bottom Navigation
+- Material Design Components
 
-Team
+Team:
+Team 13
 
-Project Team: Team 13
-
-Team Lead:
+Team Lead
 - Venesia Swartz
 
-Contributors:
-- Aakash Bajpai 
-- Ananya Verma 
+Team Members
+- Venesia Swartz
+- Aakash Bajpai
+- Ananya Verma
 - Brayson Imbambi
-- Venesia Swartz
+
+Collaboration:
+The project was developed collaboratively using GitHub.
+
+Development included:
+- Feature branches
+- Pull Requests
+- Branch merging
+- Code reviews
+- Repository management
+- Version control
+
+Development Summary:
+Week 1
+- Project planning
+- Team charter
+- GitHub repository setup
+- Flutter project setup
+- Wireframes
+- App proposal
+
+Week 2
+- Developed core application UI
+- Implemented navigation
+- Built reusable widgets
+- Designed learner interface
+
+Week 3
+- JSON data integration
+- Dynamic programme loading
+- Form validation
+- Improved navigation
+- UI testing
+- Documentation updates
+
+Week 4
+- Added learner activity tracking
+- Implemented alerts system
+- Added saved programmes
+- Added application history
+- Added review history
+- Improved learner profile
+- Repository cleanup
+- Removed obsolete code
+- Final testing
+- Documentation
+- Presentation preparation
+
+Future Improvements:
+Future versions of the application may include:
+- Firebase Authentication
+- Cloud Firestore integration
+- Push Notifications
+- Persistent user accounts
+- Profile picture upload
+- Real-time programme updates
+- Application status tracking (Applied, Shortlisted, Accepted, Rejected)
+- Review editing and deletion
+- Saved data persistence using Hive or SQLite
+- Dark mode
+- User settings customization
+
+Testing:
+The application was tested throughout development to ensure:
+- Correct navigation
+- Form validation
+- JSON loading
+- User interactions
+- Alert generation
+- Saved programme functionality
+- Application submission
+- Review submission
+- Responsive layouts
+
+License:
+This project was developed for educational purposes as part of the Excelerate Mobile Application Development Internship.
+
+Acknowledgements:
+Special thanks to:
+- Excelerate
+- Internship Mentors
+- Team 13 members
+- Flutter Community
+- Open Source Contributors
 
 
-Project Status
-Week 1 – Project Planning and Setup ✅
-
-Current Progress:
-- Repository Created
-- Flutter Project Initialized
-- Git Version Control Configured
-- App Proposal 
-- Wireframes 
-- Team Charter 
-
-
-Week 2 - Transform low-fidelity wireframes into functional Flutter UI 
-
-Current Progress:
-- Developed the application's core screens.
-- Implemented navigation between screens.
-- Created reusable Flutter widgets.
-- Maintained consistent UI design.
-- Updated project documentation.
-
-
-Week 3 – Application Functionality and Data Integration
-
-Current Progress:
-- Connected Program Listing and Program Details screens with sample JSON/mock API data.
-- Implemented dynamic data display using Flutter models.
-- Added form functionality with validation.
-- Improved user interaction and screen functionality.
-- Implemented reusable Bottom Navigation Bar widget.
-- Tested navigation flow and application features.
-- Updated documentation and project structure.
-
+_Developed using Flutter_

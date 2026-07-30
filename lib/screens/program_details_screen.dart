@@ -3,8 +3,10 @@ import '../models/program.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../screens/application_screen.dart';
 import '../screens/leave_review_screen.dart';
+import '../services/alert_service.dart';
+import '../services/saved_program_service.dart';
 
-class ProgramDetailsScreen extends StatelessWidget {
+class ProgramDetailsScreen extends StatefulWidget {
   final Program program;
 
   const ProgramDetailsScreen({
@@ -12,13 +14,78 @@ class ProgramDetailsScreen extends StatelessWidget {
     required this.program,
     });
 
+   @override
+  State<ProgramDetailsScreen> createState() =>
+      _ProgramDetailsScreenState();
+}
+
+class _ProgramDetailsScreenState
+    extends State<ProgramDetailsScreen> {
+
+  late bool isSaved;
+
+  @override
+  void initState() {
+    super.initState();
+
+    isSaved = SavedProgramService.instance
+        .isSaved(widget.program);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Program Details"),
-        centerTitle: true,
+  title: const Text("Program Details"),
+  centerTitle: true,
+
+  actions: [
+    IconButton(
+      icon: Icon(
+        isSaved ? Icons.favorite : Icons.favorite_border,
       ),
+      onPressed: () {
+       setState(() {
+
+          SavedProgramService.instance
+              .toggleProgram(widget.program);
+
+          isSaved = SavedProgramService.instance
+              .isSaved(widget.program);
+
+        });
+
+        if (isSaved) {
+          AlertService.instance.addAlert(
+            title: "Program Saved",
+            message:
+                "${widget.program.title} has been added to your saved programs.",
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Program saved."),
+            ),
+          );
+        } else {
+
+          AlertService.instance.addAlert(
+            title: "Program Removed",
+            message:
+                "${widget.program.title} has been removed from your saved programs.",
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Program removed."),
+            ),
+          );
+
+        }
+      },
+    ),
+  ],
+),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -31,7 +98,7 @@ class ProgramDetailsScreen extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.asset(
-                program.image,
+                widget.program.image,
                 width: double.infinity,
                 height: 220,
                 fit: BoxFit.cover,
@@ -42,14 +109,48 @@ class ProgramDetailsScreen extends StatelessWidget {
 
             // Program Title
             Text(
-              program.title,
+              widget.program.title,
               style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
+            //Program Category
+            const SizedBox(height: 10),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.red.shade100,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                widget.program.category,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
             const SizedBox(height: 15),
+
+            // Delivery method
+            Row(
+              children: [
+                const Icon(
+                  Icons.computer,
+                  color: Colors.red,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  widget.program.deliveryMethod,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 10),
 
             // Location
             Row(
@@ -60,7 +161,7 @@ class ProgramDetailsScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  program.location,
+                  widget.program.location,
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
@@ -77,7 +178,7 @@ class ProgramDetailsScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  "Start: ${program.startDate}",
+                  "Start: ${widget.program.startDate}",
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
@@ -94,7 +195,7 @@ class ProgramDetailsScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  "End: ${program.endDate}",
+                  "End: ${widget.program.endDate}",
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
@@ -113,7 +214,7 @@ class ProgramDetailsScreen extends StatelessWidget {
             const SizedBox(height: 10),
 
             Text(
-              program.description,
+              widget.program.description,
               style: const TextStyle(fontSize: 16),
             ),
 
@@ -129,7 +230,7 @@ class ProgramDetailsScreen extends StatelessWidget {
 
             const SizedBox(height: 10),
 
-            ...program.requirements.map(
+            ...widget.program.requirements.map(
               (requirement) => Padding(
                 padding: const EdgeInsets.only(bottom: 6),
                 child: Row(
@@ -160,7 +261,7 @@ class ProgramDetailsScreen extends StatelessWidget {
             Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: program.skills.map((skill) {
+              children: widget.program.skills.map((skill) {
                 return Chip(
                   label: Text(skill),
                   backgroundColor: Colors.red.shade100,
@@ -177,7 +278,7 @@ class ProgramDetailsScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ApplicationScreen(),
+          builder: (context) => ApplicationScreen(program: widget.program,),
         ),
       );
     },
@@ -210,7 +311,7 @@ SizedBox(
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ReviewScreen(),
+          builder: (context) => ReviewScreen(program: widget.program, ),
         ),
       );
     },

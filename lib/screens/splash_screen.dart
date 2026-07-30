@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,6 +10,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -23,44 +23,16 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
     );
 
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
 
     _controller.forward();
 
-    // Check user role after splash screen
-    _checkUserRole();
-  }
-
-  Future<void> _checkUserRole() async {
-    // Wait for splash screen animation
-    await Future.delayed(const Duration(seconds: 3));
-
-    try {
-      // Get saved user role
-      final role = await AuthService.getUserRole();
-
-      if (role == 'admin') {
-        // Admin user - go to admin home
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/admin-home');
-        }
-      } else if (role == 'learner') {
-        // Learner user - go to learner home
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/home');
-        }
-      } else {
-        // No role found - go to login
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/login');
-        }
-      }
-    } catch (e) {
-      // On error, go to login
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, '/login');
-      }
-    }
+    Timer(const Duration(seconds: 3), () {
+  Navigator.pushReplacementNamed(context, "/login");
+});
   }
 
   @override
@@ -69,8 +41,9 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
 
@@ -82,7 +55,11 @@ class _SplashScreenState extends State<SplashScreen>
             mainAxisAlignment: MainAxisAlignment.center,
 
             children: [
-              Image.asset("assets/images/excelerate_logo.png", height: 170),
+
+              Image.asset(
+                "assets/images/excelerate_logo.png",
+                height: 170,
+              ),
 
               const SizedBox(height: 35),
 
@@ -99,7 +76,10 @@ class _SplashScreenState extends State<SplashScreen>
 
               Text(
                 "Learn • Grow • Succeed",
-                style: TextStyle(fontSize: 18, color: Colors.grey.shade600),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey.shade600,
+                ),
               ),
 
               const SizedBox(height: 60),

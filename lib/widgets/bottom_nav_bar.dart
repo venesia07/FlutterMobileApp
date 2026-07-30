@@ -16,42 +16,41 @@ class BottomNavBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -2),
-          ),
-        ],
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.08),
+          blurRadius: 15,
+          offset: const Offset(0, -4),
+        ),
+      ],
       ),
       child: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: onTap,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.green[700],
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.grey.shade500,
         selectedLabelStyle: const TextStyle(
           fontWeight: FontWeight.w600,
-          fontSize: 11,
+          fontSize: 12,
         ),
         unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 11,
+          fontSize: 12,
         ),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
-            activeIcon: Icon(Icons.dashboard),
-            label: "Dashboard",
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home_rounded),
+            label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view_outlined),
-            activeIcon: Icon(Icons.grid_view),
+            icon: Icon(Icons.menu_book_outlined),
+            activeIcon: Icon(Icons.menu_book_rounded),
             label: "Programs",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
+            icon: Icon(Icons.account_circle_outlined),
+            activeIcon: Icon(Icons.account_circle),
             label: "Profile",
           ),
         ],

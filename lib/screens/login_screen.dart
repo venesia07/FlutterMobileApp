@@ -143,7 +143,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FD),
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -331,3 +330,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
